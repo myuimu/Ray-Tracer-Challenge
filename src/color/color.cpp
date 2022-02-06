@@ -1,6 +1,9 @@
 #include "color/color.h"
 #include "ray.h"
 
+#include <algorithm>
+#include <math.h>
+
 using namespace ray;
 
 color::color(const double &red, const double &green, const double &blue):
@@ -9,6 +12,10 @@ color::color(const double &red, const double &green, const double &blue):
 
 color::color(const tuple &colorTuple):
     colorTuple(colorTuple)
+    {}
+
+color::color():
+    colorTuple(tuple())
     {}
 
 double color::getRed() const {
@@ -21,6 +28,14 @@ double color::getGreen() const {
 
 double color::getBlue() const {
     return colorTuple.getZ();
+}
+
+std::string color::toString() const {
+    auto red = std::to_string((int) round(std::clamp(getRed() * 255, 0.0, 255.0)));
+    auto green = std::to_string((int) round(std::clamp(getGreen() * 255, 0.0, 255.0)));
+    auto blue = std::to_string((int) round(std::clamp(getBlue() * 255, 0.0, 255.0)));
+
+    return red + " " + green + " " + blue;
 }
 
 color color::operator+(const color &rhs) const {
@@ -48,6 +63,6 @@ bool color::operator==(const color &rhs) const {
 }
 
 std::ostream& ray::operator<<(std::ostream &os, const color &c) {
-    os << "color(" << c.getRed() << "," << c.getGreen() << "," << c.getBlue() << ")";
+    os << c.toString();
     return os;
 }

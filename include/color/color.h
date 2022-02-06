@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "tuple/tuple.h"
 
 namespace ray {
@@ -9,10 +10,12 @@ namespace ray {
         public:
             color(const double &red, const double &green, const double &blue);
             color(const tuple &colorTuple);
+            color();
 
             double getRed() const;
             double getGreen() const;
             double getBlue() const;
+            std::string toString() const;
 
             color operator+(const color &rhs) const;
             color operator-(const color &rhs) const;

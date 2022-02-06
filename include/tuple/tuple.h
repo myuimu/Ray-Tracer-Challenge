@@ -11,6 +11,7 @@ namespace ray {
             double w;
         public:
             tuple(const double &x, const double &y, const double &z, const double &w);
+            tuple();
 
             double getX() const;
             double getY() const;
@@ -38,5 +39,7 @@ namespace ray {
     };
 
     tuple point(const double &x, const double &y, const double &z);
+    tuple point();
     tuple vector(const double &x, const double &y, const double &z);
+    tuple vector();
 };

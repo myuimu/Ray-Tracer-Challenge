@@ -10,6 +10,13 @@ tuple::tuple(const double &x, const double &y, const double &z, const double &w)
     w{w}
     {}
 
+tuple::tuple():
+    x{0},
+    y{0},
+    z{0},
+    w{0}
+    {}
+
 double tuple::getX() const {
     return x;
 }
@@ -104,6 +111,14 @@ tuple ray::point(const double &x, const double &y, const double &z) {
     return tuple(x,y,z,1.0);
 }
 
+tuple ray::point() {
+    return tuple(0,0,0,1);
+}
+
 tuple ray::vector(const double &x, const double &y, const double &z) {
     return tuple(x,y,z,0);
+}
+
+tuple ray::vector() {
+    return tuple();
 }
