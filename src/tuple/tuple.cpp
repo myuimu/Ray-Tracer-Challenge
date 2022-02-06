@@ -95,7 +95,7 @@ bool tuple::operator==(const tuple &rhs) const {
         equalWithError(w, rhs.w);
 }
 
-std::ostream& ray::operator<<(std::ostream& os, const tuple& t) {
+std::ostream& ray::operator<<(std::ostream &os, const tuple &t) {
     os << "tuple(" << t.x << "," << t.y << "," << t.z << "," << t.w << ")";
     return os;
 }

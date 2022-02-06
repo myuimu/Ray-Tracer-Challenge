@@ -3,13 +3,14 @@ project(RAY_TRACER
         VERSION 0.1.0 
         LANGUAGES CXX)
 
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+
 file(GLOB_RECURSE RAY_LIB_FILES CONFIGURE_DEPENDS "src/*.cpp")
 list(FILTER RAY_LIB_FILES EXCLUDE REGEX "main|test")
 file(GLOB_RECURSE RAY_MAIN_FILES CONFIGURE_DEPENDS "src/*.cpp")
 list(FILTER RAY_MAIN_FILES EXCLUDE REGEX "test")
 file(GLOB_RECURSE RAY_TEST_FILES CONFIGURE_DEPENDS "src/*.cpp")
 list(FILTER RAY_TEST_FILES EXCLUDE REGEX "main")
-set(BOOST_INCLUDE_DIRS /opt/homebrew/Cellar/boost/1.76.0/include/)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --std=c++17")
 
 add_library(ray SHARED
@@ -25,9 +26,11 @@ add_executable(test
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(test PRIVATE 
-    ${BOOST_INCLUDE_DIRS}
+
+target_include_directories(test PUBLIC
+    ${Boost_INCLUDE_DIR}
 )
+target_link_libraries(test PUBLIC Boost::unit_test_framework)
 
 set_target_properties(ray PROPERTIES PUBLIC_HEADER include/ray.h)
 

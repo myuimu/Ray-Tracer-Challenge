@@ -1,8 +1,9 @@
-#define BOOST_TEST_MODULE tuple test
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include "tuple/tuple.h"
 
 using namespace ray;
+
+BOOST_AUTO_TEST_SUITE(tupleTest)
 
 /*-----CONSTRUCTOR TESTS-----*/
 
@@ -180,3 +181,5 @@ BOOST_AUTO_TEST_CASE(crossProduct) {
     BOOST_CHECK_EQUAL(a.cross(b), vector(-1, 2, -1));
     BOOST_CHECK_EQUAL(b.cross(a), vector(1, -2, 1));
 }
+
+BOOST_AUTO_TEST_SUITE_END()
