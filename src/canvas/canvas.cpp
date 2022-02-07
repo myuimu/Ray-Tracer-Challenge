@@ -33,9 +33,9 @@ std::ostream& ray::operator<<(std::ostream &os, const canvas &c) {
     os << "P3" << std::endl;
     os << c.getWidth() << " " << c.getHeight() << std::endl;
     os << 255 << std::endl;
-    for(auto line : c.pixels) {
+    for(auto &line : c.pixels) {
         int pixelCount = 0;
-        for(auto pixel : line) {
+        for(auto &pixel : line) {
             auto pixelString = pixel.toString();
             pixelCount += pixelString.length() + 1;
             if (pixelCount > 70) {

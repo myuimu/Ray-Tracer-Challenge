@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_CASE(createBlankCanvas) {
     BOOST_CHECK_EQUAL(c.getHeight(), 20);
 }
 
-/*-----OPERATION TESTS-----*/
+/*-----I/O TESTS-----*/
 
 BOOST_AUTO_TEST_CASE(writeToCanvas) {
     auto c = canvas(10, 20);
