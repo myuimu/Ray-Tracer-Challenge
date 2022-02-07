@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include "canvas/canvas.h"
-#include "ray.h"
+#include "ray_tracer.h"
 
 using namespace ray;
 

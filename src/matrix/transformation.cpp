@@ -1,5 +1,5 @@
 #include "matrix/transformation.h"
-#include "ray.h"
+#include "ray_tracer.h"
 #include <math.h>
 
 using namespace ray;

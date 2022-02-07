@@ -1,6 +1,6 @@
 #include "matrix/matrix.h"
 #include "matrix/transformation.h"
-#include "ray.h"
+#include "ray_tracer.h"
 #include <sstream>
 #include <vector>
 

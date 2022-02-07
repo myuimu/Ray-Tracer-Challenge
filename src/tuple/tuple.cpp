@@ -1,5 +1,5 @@
 #include "tuple/tuple.h"
-#include "ray.h"
+#include "ray_tracer.h"
 
 using namespace ray;
 

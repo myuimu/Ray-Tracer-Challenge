@@ -1,5 +1,5 @@
 #include "color/color.h"
-#include "ray.h"
+#include "ray_tracer.h"
 
 #include <algorithm>
 #include <math.h>
