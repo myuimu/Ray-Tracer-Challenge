@@ -32,7 +32,7 @@ target_include_directories(test PUBLIC
 )
 target_link_libraries(test PUBLIC Boost::unit_test_framework)
 
-set_target_properties(ray PROPERTIES PUBLIC_HEADER include/ray.h)
+set_target_properties(ray PROPERTIES PUBLIC_HEADER include/ray_tracer.h)
 
 set_property(GLOBAL PROPERTY CXX_STANDARD 17)
 
