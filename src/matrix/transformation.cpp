@@ -24,7 +24,7 @@ matrix ray::scaling(const double &x, const double &y, const double &z) {
     return matrix(values);
 }
 
-matrix ray::rotateX(const double &r) {
+matrix ray::xRotation(const double &r) {
     auto values = std::vector<std::vector<double>>({
         {1, 0, 0, 0},
         {0, cos(r), -sin(r), 0},
@@ -34,7 +34,7 @@ matrix ray::rotateX(const double &r) {
     return matrix(values);
 }
 
-matrix ray::rotateY(const double &r) {
+matrix ray::yRotation(const double &r) {
     auto values = std::vector<std::vector<double>>({
         {cos(r), 0, sin(r), 0},
         {0, 1, 0, 0},
@@ -44,7 +44,7 @@ matrix ray::rotateY(const double &r) {
     return matrix(values);
 }
 
-matrix ray::rotateZ(const double &r) {
+matrix ray::zRotation(const double &r) {
     auto values = std::vector<std::vector<double>>({
         {cos(r), -sin(r), 0, 0},
         {sin(r), cos(r), 0, 0},

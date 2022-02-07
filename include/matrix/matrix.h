@@ -23,6 +23,13 @@ namespace ray {
             bool isInvertable() const;
             matrix getInverse() const;
 
+            matrix translate(const double &x, const double &y, const double &z) const;
+            matrix scale(const double &x, const double &y, const double &z) const;
+            matrix rotateX(const double &r) const;
+            matrix rotateY(const double &r) const;
+            matrix rotateZ(const double &r) const;
+            matrix shear(const double &xY, const double &xZ, const double &yX, const double &yZ, const double &zX, const double &zY) const;
+
             const std::vector<double> &operator[](const int &index) const;
             matrix operator*(const matrix &rhs) const;
             tuple operator*(const tuple &rhs) const;

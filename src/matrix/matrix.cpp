@@ -1,4 +1,5 @@
 #include "matrix/matrix.h"
+#include "matrix/transformation.h"
 #include "ray.h"
 #include <sstream>
 #include <vector>
@@ -97,6 +98,30 @@ matrix matrix::getInverse() const {
     }
 
     return matrix(newValues);
+}
+
+matrix matrix::translate(const double &x, const double &y, const double &z) const {
+    return ray::translation(x, y, z) * *this;
+}
+
+matrix matrix::scale(const double &x, const double &y, const double &z) const {
+    return ray::scaling(x, y ,z) * *this;
+}
+
+matrix matrix::rotateX(const double &r) const {
+    return ray::xRotation(r) * *this;
+}
+
+matrix matrix::rotateY(const double &r) const {
+    return ray::yRotation(r) * *this;
+}
+
+matrix matrix::rotateZ(const double &r) const {
+    return zRotation(r) * *this;
+}
+
+matrix matrix::shear(const double &xY, const double &xZ, const double &yX, const double &yZ, const double &zX, const double &zY) const {
+    return shearing(xY, xZ, yX, yZ, zX, zY) * *this;
 }
 
 const std::vector<double> &matrix::operator[](const int &index) const {
