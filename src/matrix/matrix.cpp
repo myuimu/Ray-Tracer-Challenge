@@ -14,6 +14,10 @@ matrix::matrix(const std::vector<std::vector<double>> &values):
     values{values}
     {}
 
+matrix::matrix(const matrix &m):
+    values{m.values}
+    {}
+
 int matrix::getWidth() const {
     if (values.size() > 0) {
         return values[0].size();

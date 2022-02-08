@@ -10,6 +10,7 @@ namespace rayTracer {
         public:
             matrix(const int &width, const int &height);
             matrix(const std::vector<std::vector<double>> &values);
+            matrix(const matrix &m);
 
             int getWidth() const;
             int getHeight() const;

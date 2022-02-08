@@ -19,6 +19,10 @@ tuple ray::getPosition(const double &t) const {
     return origin + (direction * t);
 }
 
+ray ray::transform(const matrix &m) const {
+    return ray(m * origin, m * direction);
+}
+
 bool ray::operator==(const ray &rhs) {
     return origin == rhs.origin &&
            direction == rhs.direction;

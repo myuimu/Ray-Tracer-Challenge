@@ -12,12 +12,14 @@ sphere::sphere():
     {}
 
 std::vector<intersection> sphere::getIntersections(const ray &r) const {
+    auto newRay = r.transform(transform.getInverse());
+
     auto intersections = std::vector<intersection>();
     
-    auto sphereToRay = r.getOrigin() - origin;
+    auto sphereToRay = newRay.getOrigin() - origin;
 
-    auto a = r.getDirection().dot(r.getDirection());
-    auto b = 2 * r.getDirection().dot(sphereToRay);
+    auto a = newRay.getDirection().dot(newRay.getDirection());
+    auto b = 2 * newRay.getDirection().dot(sphereToRay);
     auto c = sphereToRay.dot(sphereToRay) - 1;
 
     auto discriminant = pow(b, 2) - (4 * a * c);
