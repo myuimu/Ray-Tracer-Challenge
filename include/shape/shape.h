@@ -1,13 +1,14 @@
 #pragma once
 #include <vector>
 #include "ray/ray.h"
+#include "intersection/intersection.h"
 
 namespace rayTracer {
     class shape {
         private:
             virtual bool isEqual(const shape &s) const = 0;
         public:
-            virtual std::vector<double> getIntersections(const ray &r) const = 0;
+            virtual std::vector<intersection> getIntersections(const ray &r) const = 0;
 
             virtual std::string toString() const = 0;
 

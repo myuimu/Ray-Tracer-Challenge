@@ -11,8 +11,8 @@ sphere::sphere():
     radius{1}
     {}
 
-std::vector<double> sphere::getIntersections(const ray &r) const {
-    auto points = std::vector<double>();
+std::vector<intersection> sphere::getIntersections(const ray &r) const {
+    auto intersections = std::vector<intersection>();
     
     auto sphereToRay = r.getOrigin() - origin;
 
@@ -23,12 +23,12 @@ std::vector<double> sphere::getIntersections(const ray &r) const {
     auto discriminant = pow(b, 2) - (4 * a * c);
 
     if (discriminant < 0) {
-        return points;
+        return intersections;
     }
-    points.push_back((-b - sqrt(discriminant))/(2 * a));
-    points.push_back((-b + sqrt(discriminant))/(2 * a));
+    intersections.push_back(intersection((-b - sqrt(discriminant))/(2 * a), *this));
+    intersections.push_back(intersection((-b + sqrt(discriminant))/(2 * a), *this));
 
-    return points;
+    return intersections;
 }
 
 bool sphere::isEqual(const shape &s) const {

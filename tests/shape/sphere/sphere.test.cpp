@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include "shape/sphere/sphere.h"
-#include "ray_tracer.h"
+#include "intersection/intersection.h"
 
 using namespace rayTracer;
 
@@ -13,8 +13,8 @@ BOOST_AUTO_TEST_CASE(rayIntersectsTwice) {
     auto intersections = s.getIntersections(r);
 
     BOOST_CHECK_EQUAL(intersections.size(), 2);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[0], 4), true);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[1], 6), true);
+    BOOST_CHECK_EQUAL(intersections[0].getObject(), s);
+    BOOST_CHECK_EQUAL(intersections[1].getObject(), s);
 }
 
 BOOST_AUTO_TEST_CASE(rayIntersectsOnce) {
@@ -24,8 +24,8 @@ BOOST_AUTO_TEST_CASE(rayIntersectsOnce) {
     auto intersections = s.getIntersections(r);
 
     BOOST_CHECK_EQUAL(intersections.size(), 2);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[0], 5), true);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[1], 5), true);
+    BOOST_CHECK_EQUAL(intersections[0].getT(), 5);
+    BOOST_CHECK_EQUAL(intersections[1].getT(), 5);
 }
 
 BOOST_AUTO_TEST_CASE(rayDoesNotIntersect) {
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE(intersectionBehindRay) {
     auto intersections = s.getIntersections(r);
 
     BOOST_CHECK_EQUAL(intersections.size(), 2);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[0], -6), true);
-    BOOST_CHECK_EQUAL(equalWithError(intersections[1], -4), true);
+    BOOST_CHECK_EQUAL(intersections[0].getT(), -6);
+    BOOST_CHECK_EQUAL(intersections[1].getT(), -4);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

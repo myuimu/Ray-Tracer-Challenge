@@ -6,6 +6,11 @@
 #include "color/color.h"
 #include "matrix/matrix.h"
 #include "matrix/transformation.h"
+#include "canvas/canvas.h"
+#include "intersection/intersection.h"
+#include "ray/ray.h"
+#include "shape/shape.h"
+#include "shape/sphere/sphere.h"
 
 namespace rayTracer {
     bool equalWithError(const double &lhs, const double &rhs);

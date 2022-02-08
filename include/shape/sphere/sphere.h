@@ -12,7 +12,7 @@ namespace rayTracer {
 
             std::string toString() const;
 
-            std::vector<double> getIntersections(const ray &r) const;
+            std::vector<intersection> getIntersections(const ray &r) const;
 
             virtual bool isEqual(const shape &s) const;
     };
