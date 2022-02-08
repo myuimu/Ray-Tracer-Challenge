@@ -1,6 +1,6 @@
 #include "canvas/canvas.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 canvas::canvas(const int &width, const int &height):
     pixels{std::vector<std::vector<color>>(height, std::vector<color>(width, color()))}
@@ -29,7 +29,7 @@ void canvas::plot(const int &x, const int &y, const color &c) {
     pixels.at(y).at(x) = c;
 }
 
-std::ostream& ray::operator<<(std::ostream &os, const canvas &c) {
+std::ostream& rayTracer::operator<<(std::ostream &os, const canvas &c) {
     os << "P3" << std::endl;
     os << c.getWidth() << " " << c.getHeight() << std::endl;
     os << 255 << std::endl;

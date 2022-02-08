@@ -7,6 +7,6 @@
 #include "matrix/matrix.h"
 #include "matrix/transformation.h"
 
-namespace ray {
+namespace rayTracer {
     bool equalWithError(const double &lhs, const double &rhs);
 }

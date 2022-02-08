@@ -5,7 +5,7 @@
 #include <vector>
 #include "color/color.h"
 
-namespace ray {
+namespace rayTracer {
     class canvas {
         private:
             std::vector<std::vector<color>> pixels;

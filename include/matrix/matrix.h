@@ -3,8 +3,7 @@
 #include <vector>
 #include "tuple/tuple.h"
 
-namespace ray {
-
+namespace rayTracer {
     class matrix {
         private:
             std::vector<std::vector<double>> values;

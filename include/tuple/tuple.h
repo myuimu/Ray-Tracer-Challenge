@@ -2,7 +2,7 @@
 #include <iostream>
 #include "math.h"
 
-namespace ray {
+namespace rayTracer {
     class tuple {
         private:
             double x;

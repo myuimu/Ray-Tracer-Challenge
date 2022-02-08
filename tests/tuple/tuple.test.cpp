@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include "tuple/tuple.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 BOOST_AUTO_TEST_SUITE(tupleTest)
 

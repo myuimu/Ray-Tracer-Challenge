@@ -2,7 +2,7 @@
 #include "color/color.h"
 #include "ray_tracer.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 BOOST_AUTO_TEST_SUITE(colorTest)
 

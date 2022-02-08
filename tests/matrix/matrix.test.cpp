@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include "matrix/matrix.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 BOOST_AUTO_TEST_SUITE(matrixTest)
 

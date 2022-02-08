@@ -2,7 +2,7 @@
 #include "canvas/canvas.h"
 #include "ray_tracer.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 BOOST_AUTO_TEST_SUITE(canvasTest)
 

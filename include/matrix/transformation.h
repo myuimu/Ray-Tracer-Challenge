@@ -2,7 +2,7 @@
 #include <iostream>
 #include "matrix/matrix.h"
 
-namespace ray {
+namespace rayTracer {
     matrix translation(const double &x, const double &y, const double &z);
     matrix scaling(const double &x, const double &y, const double &z);
     matrix xRotation(const double &r);

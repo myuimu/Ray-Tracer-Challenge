@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 
-using namespace ray;
+using namespace rayTracer;
 
 matrix::matrix(const int &width, const int &height):
     values{std::vector<std::vector<double>>(height, std::vector<double>(width, 0))}
@@ -101,19 +101,19 @@ matrix matrix::getInverse() const {
 }
 
 matrix matrix::translate(const double &x, const double &y, const double &z) const {
-    return ray::translation(x, y, z) * *this;
+    return rayTracer::translation(x, y, z) * *this;
 }
 
 matrix matrix::scale(const double &x, const double &y, const double &z) const {
-    return ray::scaling(x, y ,z) * *this;
+    return rayTracer::scaling(x, y ,z) * *this;
 }
 
 matrix matrix::rotateX(const double &r) const {
-    return ray::xRotation(r) * *this;
+    return rayTracer::xRotation(r) * *this;
 }
 
 matrix matrix::rotateY(const double &r) const {
-    return ray::yRotation(r) * *this;
+    return rayTracer::yRotation(r) * *this;
 }
 
 matrix matrix::rotateZ(const double &r) const {
@@ -189,12 +189,12 @@ bool matrix::operator==(const matrix &rhs) const {
     return true;
 }
 
-std::ostream& ray::operator<<(std::ostream &os, const matrix &m) {
+std::ostream& rayTracer::operator<<(std::ostream &os, const matrix &m) {
     os << "Matrix(" << m.getHeight() << ", " << m.getWidth() << ")" << std::endl;
     return os;
 }
 
-matrix ray::getIdentityMatrix() {
+matrix rayTracer::getIdentityMatrix() {
     auto values = std::vector<std::vector<double>>({
         {1, 0, 0, 0},
         {0, 1, 0, 0},

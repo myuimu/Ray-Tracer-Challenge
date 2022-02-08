@@ -3,7 +3,7 @@
 #include "tuple/tuple.h"
 #include <math.h>
 
-using namespace ray;
+using namespace rayTracer;
 
 BOOST_AUTO_TEST_SUITE(transformationTest)
 

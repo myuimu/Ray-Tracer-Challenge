@@ -3,7 +3,7 @@
 #include <string>
 #include "tuple/tuple.h"
 
-namespace ray {
+namespace rayTracer {
     class color {
         private:
             tuple colorTuple;

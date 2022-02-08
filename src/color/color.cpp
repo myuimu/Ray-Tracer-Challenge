@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <math.h>
 
-using namespace ray;
+using namespace rayTracer;
 
 color::color(const double &red, const double &green, const double &blue):
     colorTuple{vector(red, green, blue)}
@@ -62,7 +62,7 @@ bool color::operator==(const color &rhs) const {
     return colorTuple == rhs.colorTuple;
 }
 
-std::ostream& ray::operator<<(std::ostream &os, const color &c) {
+std::ostream& rayTracer::operator<<(std::ostream &os, const color &c) {
     os << c.toString();
     return os;
 }

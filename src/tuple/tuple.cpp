@@ -1,7 +1,7 @@
 #include "tuple/tuple.h"
 #include "ray_tracer.h"
 
-using namespace ray;
+using namespace rayTracer;
 
 tuple::tuple(const double &x, const double &y, const double &z, const double &w):
     x{x},
@@ -102,23 +102,23 @@ bool tuple::operator==(const tuple &rhs) const {
         equalWithError(w, rhs.w);
 }
 
-std::ostream& ray::operator<<(std::ostream &os, const tuple &t) {
+std::ostream& rayTracer::operator<<(std::ostream &os, const tuple &t) {
     os << "tuple(" << t.x << "," << t.y << "," << t.z << "," << t.w << ")";
     return os;
 }
 
-tuple ray::point(const double &x, const double &y, const double &z) {
+tuple rayTracer::point(const double &x, const double &y, const double &z) {
     return tuple(x,y,z,1.0);
 }
 
-tuple ray::point() {
+tuple rayTracer::point() {
     return tuple(0,0,0,1);
 }
 
-tuple ray::vector(const double &x, const double &y, const double &z) {
+tuple rayTracer::vector(const double &x, const double &y, const double &z) {
     return tuple(x,y,z,0);
 }
 
-tuple ray::vector() {
+tuple rayTracer::vector() {
     return tuple();
 }
