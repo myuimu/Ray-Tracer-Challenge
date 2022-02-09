@@ -82,7 +82,7 @@ bool material::operator==(const material &rhs) const {
         shininess == rhs.shininess;
 }
 
-color material::getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV) {
+color material::getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV) const {
     auto effectiveColor = c * light.getIntensity();
     auto lightV = (light.getPosition() - position).normalized();
     auto ambientContribution = effectiveColor * ambient;
