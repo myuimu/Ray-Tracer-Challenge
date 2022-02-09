@@ -17,6 +17,7 @@ namespace rayTracer {
             void setTransform(const matrix &m);
 
             virtual std::vector<intersection> getIntersections(const ray &r) const = 0;
+            virtual tuple getNormal(const tuple &p) const = 0;
             virtual std::string toString() const = 0;
 
             bool operator==(const shape &s) const;

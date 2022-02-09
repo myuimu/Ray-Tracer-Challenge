@@ -182,4 +182,22 @@ BOOST_AUTO_TEST_CASE(crossProduct) {
     BOOST_CHECK_EQUAL(b.cross(a), vector(1, -2, 1));
 }
 
+BOOST_AUTO_TEST_CASE(reflect45DegreeVector) {
+    auto v = vector(1, -1, 0);
+    auto n = vector(0, 1, 0);
+
+    auto r = v.reflect(n);
+
+    BOOST_CHECK_EQUAL(r, vector(1, 1, 0));
+}
+
+BOOST_AUTO_TEST_CASE(reflectVectorOffSlant) {
+    auto v = vector(0, -1, 0);
+    auto n = vector(sqrt(2) / 2, sqrt(2) / 2, 0);
+
+    auto r = v.reflect(n);
+
+    BOOST_CHECK_EQUAL(r, vector(1, 0, 0));
+}
+
 BOOST_AUTO_TEST_SUITE_END()

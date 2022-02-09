@@ -88,4 +88,62 @@ BOOST_AUTO_TEST_CASE(intersectTranslatedSphere) {
     BOOST_CHECK_EQUAL(xs.size(), 0);
 }
 
+BOOST_AUTO_TEST_CASE(xNormal) {
+    auto s = sphere();
+    
+    auto n = s.getNormal(point(1, 0, 0));
+
+    BOOST_CHECK_EQUAL(n, vector(1, 0, 0));
+}
+
+BOOST_AUTO_TEST_CASE(yNormal) {
+    auto s = sphere();
+    
+    auto n = s.getNormal(point(0, 1, 0));
+
+    BOOST_CHECK_EQUAL(n, vector(0, 1, 0));
+}
+
+BOOST_AUTO_TEST_CASE(xzNormal) {
+    auto s = sphere();
+    
+    auto n = s.getNormal(point(0, 0, 1));
+
+    BOOST_CHECK_EQUAL(n, vector(0, 0, 1));
+}
+
+BOOST_AUTO_TEST_CASE(nonAxialNormal) {
+    auto s = sphere();
+    
+    auto n = s.getNormal(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+    BOOST_CHECK_EQUAL(n, vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+}
+
+BOOST_AUTO_TEST_CASE(normalIsNormalized) {
+    auto s = sphere();
+    
+    auto n = s.getNormal(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+
+    BOOST_CHECK_EQUAL(n, n.normalized());
+}
+
+BOOST_AUTO_TEST_CASE(normalOfTranslatedSphere) {
+    auto s = sphere();
+    s.setTransform(translation(0, 1, 0));
+
+    auto n = s.getNormal(point(0, 1.70711, -0.70711));
+
+    BOOST_CHECK_EQUAL(n, vector(0, 0.70711, -0.70711));
+}
+
+BOOST_AUTO_TEST_CASE(normalOfScaledAndRotatedSphere) {
+    auto s = sphere();
+    s.setTransform(zRotation(M_PI / 5).scale(1, 0.5, 1));
+
+    auto n = s.getNormal(point(0, sqrt(2) / 2, -sqrt(2) / 2));
+
+    BOOST_CHECK_EQUAL(n, vector(0, 0.97014, -0.24254));
+}
+
 BOOST_AUTO_TEST_SUITE_END()

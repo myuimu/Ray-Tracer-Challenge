@@ -33,6 +33,15 @@ std::vector<intersection> sphere::getIntersections(const ray &r) const {
     return intersections;
 }
 
+tuple sphere::getNormal(const tuple &p) const {
+    auto inverseTransform = transform.getInverse();
+    auto objectPoint = inverseTransform * p;
+    auto objectNormal = objectPoint - origin;
+    auto worldNormal = inverseTransform.getTranspose() * objectNormal;
+
+    return worldNormal.toVector().normalized();
+}
+
 bool sphere::isEqual(const shape &s) const {
     const sphere &sSphere = static_cast<const sphere &>(s);
 

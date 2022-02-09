@@ -21,11 +21,15 @@ namespace rayTracer {
             bool isPoint() const;
             bool isVector() const;
 
+            tuple toPoint() const;
+            tuple toVector() const;
+
             double getMagnitude() const;
             tuple normalized() const;
 
             double dot(const tuple &rhs) const;
             tuple cross(const tuple &rhs) const;
+            tuple reflect(const tuple &rhs) const;
 
             tuple operator+(const tuple &rhs) const;
             tuple operator-(const tuple &rhs) const;

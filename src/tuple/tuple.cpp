@@ -41,6 +41,14 @@ bool tuple::isVector() const {
     return w == 0.0;
 }
 
+tuple tuple::toPoint() const {
+    return point(x, y, z);
+}
+
+tuple tuple::toVector() const {
+    return vector(x, y, z);
+}
+
 double tuple::getMagnitude() const {
     return sqrt(
         pow(x, 2) +
@@ -73,6 +81,10 @@ tuple tuple::cross(const tuple &rhs) const {
         z * rhs.x - x * rhs.z,
         x * rhs.y - y * rhs.x
     );
+}
+
+tuple tuple::reflect(const tuple &rhs) const {
+    return *this - rhs * 2 * dot(rhs);
 }
 
 tuple tuple::operator+(const tuple &rhs) const {
