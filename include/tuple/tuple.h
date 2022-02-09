@@ -13,10 +13,10 @@ namespace rayTracer {
             tuple(const double &x, const double &y, const double &z, const double &w);
             tuple();
 
-            double getX() const;
-            double getY() const;
-            double getZ() const;
-            double getW() const;
+            const double &getX() const;
+            const double &getY() const;
+            const double &getZ() const;
+            const double &getW() const;
 
             bool isPoint() const;
             bool isVector() const;

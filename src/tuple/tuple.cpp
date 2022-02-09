@@ -17,19 +17,19 @@ tuple::tuple():
     w{0}
     {}
 
-double tuple::getX() const {
+const double &tuple::getX() const {
     return x;
 }
 
-double tuple::getY() const {
+const double &tuple::getY() const {
     return y;
 }
 
-double tuple::getZ() const {
+const double &tuple::getZ() const {
     return z;
 }
 
-double tuple::getW() const {
+const double &tuple::getW() const {
     return w;
 }
 

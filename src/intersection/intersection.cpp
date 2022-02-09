@@ -8,7 +8,7 @@ intersection::intersection(const double &t, const shape &object):
     object{object}
     {}
 
-double intersection::getT() const {
+const double &intersection::getT() const {
     return t;
 }
 

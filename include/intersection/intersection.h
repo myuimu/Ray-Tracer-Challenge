@@ -13,7 +13,7 @@ namespace rayTracer {
             intersection(const double &t, const shape &object);
             intersection(const double &t, const shape &&) = delete;
 
-            double getT() const;
+            const double &getT() const;
             const shape &getObject() const;
 
             bool operator==(const intersection &rhs) const;

@@ -3,7 +3,8 @@
 using namespace rayTracer;
 
 shape::shape():
-    transform{IDENTITY_MATRIX}
+    transform{IDENTITY_MATRIX},
+    m{material()}
     {}
 
 const matrix &shape::getTransform() const {
@@ -12,6 +13,14 @@ const matrix &shape::getTransform() const {
 
 void shape::setTransform(const matrix &m) {
     transform = m;
+}
+
+const material &shape::getMaterial() const {
+    return m;
+}
+
+void shape::setMaterial(const material &newMaterial) {
+    m = newMaterial;
 }
 
 std::ostream &rayTracer::operator<<(std::ostream &os, const shape &s) {

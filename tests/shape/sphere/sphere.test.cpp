@@ -4,6 +4,7 @@
 #include "matrix/matrix.h"
 #include "matrix/transformation.h"
 #include "ray/ray.h"
+#include "shape/material.h"
 
 using namespace rayTracer;
 
@@ -144,6 +145,24 @@ BOOST_AUTO_TEST_CASE(normalOfScaledAndRotatedSphere) {
     auto n = s.getNormal(point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
     BOOST_CHECK_EQUAL(n, vector(0, 0.97014, -0.24254));
+}
+
+BOOST_AUTO_TEST_CASE(hasDefaultMaterial) {
+    auto s = sphere();
+
+    auto m = s.getMaterial();
+
+    BOOST_CHECK_EQUAL(m, material());
+}
+
+BOOST_AUTO_TEST_CASE(canAssignMaterial) {
+    auto s = sphere();
+    auto m = material();
+    m.setAmbient(1);
+    
+    s.setMaterial(m);
+
+    BOOST_CHECK_EQUAL(s.getMaterial(), m);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
