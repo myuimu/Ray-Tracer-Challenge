@@ -1,5 +1,6 @@
 #include "world/world.h"
 #include <algorithm>
+#include <iostream>
 
 using namespace rayTracer;
 
@@ -21,4 +22,31 @@ std::vector<intersection> world::getIntersections(const ray &r) const {
     });
 
     return intersections;
+}
+
+color world::shadeHit(const computations &comps) const {
+    auto c = BLACK;
+
+    for (auto &light : lights) {
+        c = c + comps.getObject().getMaterial().getLighting(
+            light, 
+            comps.getPoint(), 
+            comps.getEyeV(), 
+            comps.getNormalV());
+    }
+
+    return c;
+}
+
+color world::colorAt(const ray &r) const {
+    auto intersections = getIntersections(r);
+    auto hit = getHit(intersections);
+
+    if (hit == intersections.end()) {
+        return BLACK;
+    }
+
+    auto comps = computations(*hit, r);
+
+    return shadeHit(comps);
 }

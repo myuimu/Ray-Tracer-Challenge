@@ -16,6 +16,10 @@ const shape &intersection::getObject() const {
     return *object.get();
 }
 
+const std::shared_ptr<const shape> &intersection::getObjectPtr() const {
+    return object;
+}
+
 bool intersection::operator==(const intersection &rhs) const {
     return t == rhs.t && object == rhs.object;
 }

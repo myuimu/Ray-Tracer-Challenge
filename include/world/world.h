@@ -4,6 +4,8 @@
 #include "light/pointLight.h"
 #include "shape/shape.h"
 #include "intersection/intersection.h"
+#include "color/color.h"
+#include "intersection/computations.h"
 
 namespace rayTracer {
     class world {
@@ -15,5 +17,7 @@ namespace rayTracer {
             world(const std::vector<std::shared_ptr<shape>> &objects, const std::vector<pointLight> &lights);
 
             std::vector<intersection> getIntersections(const ray &r) const;
+            color shadeHit(const computations &comps) const;
+            color colorAt(const ray &r) const;
     };
 };

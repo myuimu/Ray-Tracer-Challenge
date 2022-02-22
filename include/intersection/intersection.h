@@ -15,6 +15,7 @@ namespace rayTracer {
 
             const double &getT() const;
             const shape &getObject() const;
+            const std::shared_ptr<const shape> &getObjectPtr() const;
 
             bool operator==(const intersection &rhs) const;
 
