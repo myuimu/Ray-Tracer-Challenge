@@ -37,4 +37,5 @@ namespace rayTracer {
 
             friend std::ostream &operator<<(std::ostream &os, const material &m);
     };
+    std::ostream &operator<<(std::ostream &os, const material &m);
 };

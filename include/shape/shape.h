@@ -30,4 +30,5 @@ namespace rayTracer {
             bool operator==(const shape &s) const;
             friend std::ostream &operator<<(std::ostream &os, const shape &s);
     };
+    std::ostream &operator<<(std::ostream &os, const shape &s);
 };

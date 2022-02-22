@@ -41,6 +41,7 @@ namespace rayTracer {
 
             friend std::ostream& operator<<(std::ostream &os, const tuple &t);
     };
+    std::ostream& operator<<(std::ostream &os, const tuple &t);
 
     tuple point(const double &x, const double &y, const double &z);
     tuple point();

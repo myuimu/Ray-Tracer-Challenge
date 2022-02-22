@@ -37,6 +37,7 @@ namespace rayTracer {
 
             friend std::ostream& operator<<(std::ostream &os, const matrix &m);
     };
+    std::ostream& operator<<(std::ostream &os, const matrix &m);
 
     matrix getIdentityMatrix();
 

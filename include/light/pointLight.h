@@ -17,4 +17,5 @@ namespace rayTracer {
 
             friend std::ostream &operator<<(std::ostream &os, const pointLight &rhs);
     };
+    std::ostream &operator<<(std::ostream &os, const pointLight &rhs);
 };

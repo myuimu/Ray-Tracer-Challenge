@@ -26,6 +26,7 @@ namespace rayTracer {
 
             friend std::ostream& operator<<(std::ostream &os, const color &c);
     };
+    std::ostream& operator<<(std::ostream &os, const color &c);
 
     inline const color BLACK = color(0, 0, 0);
 };

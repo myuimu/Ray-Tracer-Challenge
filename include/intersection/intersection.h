@@ -20,6 +20,7 @@ namespace rayTracer {
 
             friend std::ostream& operator<<(std::ostream &os, const intersection &i);
     };
+    std::ostream& operator<<(std::ostream &os, const intersection &i);
 
     std::vector<rayTracer::intersection>::const_iterator getHit(const std::vector<intersection> &intersections);
 };

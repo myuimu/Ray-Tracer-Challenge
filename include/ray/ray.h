@@ -21,4 +21,5 @@ namespace rayTracer {
 
             friend std::ostream &operator<<(std::ostream &os, const ray &r);
     };
+    std::ostream &operator<<(std::ostream &os, const ray &r);
 };
