@@ -6,7 +6,7 @@
 #include "material.h"
 
 namespace rayTracer {
-    class shape {
+    class shape : public std::enable_shared_from_this<shape>{
         protected:
             matrix transform;
             material m;
@@ -14,6 +14,8 @@ namespace rayTracer {
             virtual bool isEqual(const shape &s) const;
         public:
             shape();
+            shape(const matrix &transform, const material &m);
+            virtual ~shape() = default;
 
             const matrix &getTransform() const;
             void setTransform(const matrix &m);

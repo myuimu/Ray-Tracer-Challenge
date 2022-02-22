@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <memory>
 
 namespace rayTracer {
     class shape;
@@ -8,10 +9,9 @@ namespace rayTracer {
     class intersection {
         private:
             double t;
-            const shape &object;
+            std::shared_ptr<const shape> object;
         public:
-            intersection(const double &t, const shape &object);
-            intersection(const double &t, const shape &&) = delete;
+            intersection(const double &t, const std::shared_ptr<const shape> &object);
 
             const double &getT() const;
             const shape &getObject() const;

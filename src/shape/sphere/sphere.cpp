@@ -11,6 +11,12 @@ sphere::sphere():
     radius{1}
     {}
 
+sphere::sphere(const matrix &transform, const material &m):
+    shape(transform, m),
+    origin{point(0, 0, 0)},
+    radius{1}
+    {}
+
 std::vector<intersection> sphere::getIntersections(const ray &r) const {
     auto newRay = r.transform(transform.getInverse());
 
@@ -27,8 +33,8 @@ std::vector<intersection> sphere::getIntersections(const ray &r) const {
     if (discriminant < 0) {
         return intersections;
     }
-    intersections.push_back(intersection((-b - sqrt(discriminant))/(2 * a), *this));
-    intersections.push_back(intersection((-b + sqrt(discriminant))/(2 * a), *this));
+    intersections.push_back(intersection((-b - sqrt(discriminant))/(2 * a), shared_from_this()));
+    intersections.push_back(intersection((-b + sqrt(discriminant))/(2 * a), shared_from_this()));
 
     return intersections;
 }

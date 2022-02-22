@@ -9,6 +9,7 @@ namespace rayTracer {
             double radius;
         public:
             sphere();
+            sphere(const matrix &transform, const material &m);
 
             std::string toString() const;
 

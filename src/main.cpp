@@ -7,15 +7,15 @@ int main() {
     auto rayOrigin = point(0, 0, -5);
     int wallZ = 10;
     double wallSize = 7.0;
-    int canvasPixels = 1000;
+    int canvasPixels = 100;
     double pixelSize = wallSize / canvasPixels;
     double half = wallSize / 2;
 
     auto wall = canvas(canvasPixels, canvasPixels);
-    auto s = sphere();
+    auto s = std::make_shared<sphere>(sphere());
     auto m = material();
     m.setColor(color(1, 0.2, 1));
-    s.setMaterial(m);
+    s->setMaterial(m);
     auto lightPosition = point(-10, 10, -10);
     auto lightColor = color(1, 1, 1);
     auto light = pointLight(lightPosition, lightColor);
@@ -27,7 +27,7 @@ int main() {
             auto position = point(worldX, worldY, wallZ);
 
             auto r = ray(rayOrigin, (position - rayOrigin).normalized());
-            auto xs = s.getIntersections(r);
+            auto xs = s->getIntersections(r);
 
             auto hit = getHit(xs);
             if (hit != xs.end()) {

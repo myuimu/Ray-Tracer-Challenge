@@ -8,7 +8,7 @@ BOOST_AUTO_TEST_SUITE(intersectionTest)
 
 BOOST_AUTO_TEST_CASE(intersectionHasTAndObject) {
     auto s = sphere();
-    auto i = intersection(3.5, s);
+    auto i = intersection(3.5, std::make_shared<sphere>(s));
 
     BOOST_CHECK_EQUAL(i.getT(), 3.5);
     BOOST_CHECK_EQUAL(i.getObject(), s);
@@ -16,8 +16,8 @@ BOOST_AUTO_TEST_CASE(intersectionHasTAndObject) {
 
 BOOST_AUTO_TEST_CASE(listOfIntersections) {
     auto s = sphere();
-    auto i1 = intersection(1, s);
-    auto i2 = intersection(2, s);
+    auto i1 = intersection(1, std::make_shared<sphere>(s));
+    auto i2 = intersection(2, std::make_shared<sphere>(s));
 
     auto xs = std::vector<intersection>{i1, i2};
 
@@ -28,8 +28,8 @@ BOOST_AUTO_TEST_CASE(listOfIntersections) {
 
 BOOST_AUTO_TEST_CASE(hitAllIntersectionsPositive) {
     auto s = sphere();
-    auto i1 = intersection(1, s);
-    auto i2 = intersection(2, s);
+    auto i1 = intersection(1, std::make_shared<sphere>(s));
+    auto i2 = intersection(2, std::make_shared<sphere>(s));
     auto xs = std::vector<intersection>{i1, i2};
 
     auto i = getHit(xs);
@@ -39,8 +39,8 @@ BOOST_AUTO_TEST_CASE(hitAllIntersectionsPositive) {
 
 BOOST_AUTO_TEST_CASE(hitSomeIntersectionsNegative) {
     auto s = sphere();
-    auto i1 = intersection(-1, s);
-    auto i2 = intersection(1, s);
+    auto i1 = intersection(-1, std::make_shared<sphere>(s));
+    auto i2 = intersection(1, std::make_shared<sphere>(s));
     auto xs = std::vector<intersection>{i1, i2};
 
     auto i = getHit(xs);
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE(hitSomeIntersectionsNegative) {
 
 BOOST_AUTO_TEST_CASE(hitAllIntersectionsNegative) {
     auto s = sphere();
-    auto i1 = intersection(1, s);
-    auto i2 = intersection(2, s);
+    auto i1 = intersection(1, std::make_shared<sphere>(s));
+    auto i2 = intersection(2, std::make_shared<sphere>(s));
     auto xs = std::vector<intersection>{i1, i2};
 
     auto i = getHit(xs);
@@ -61,10 +61,10 @@ BOOST_AUTO_TEST_CASE(hitAllIntersectionsNegative) {
 
 BOOST_AUTO_TEST_CASE(hitIsLowestNonNegativeIntersection) {
     auto s = sphere();
-    auto i1 = intersection(5, s);
-    auto i2 = intersection(7, s);
-    auto i3 = intersection(-3, s);
-    auto i4 = intersection(2, s);
+    auto i1 = intersection(5, std::make_shared<sphere>(s));
+    auto i2 = intersection(7, std::make_shared<sphere>(s));
+    auto i3 = intersection(-3, std::make_shared<sphere>(s));
+    auto i4 = intersection(2, std::make_shared<sphere>(s));
     auto xs = std::vector<intersection>{i1, i2, i3, i4};
 
     auto i = getHit(xs);

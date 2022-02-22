@@ -7,6 +7,11 @@ shape::shape():
     m{material()}
     {}
 
+shape::shape(const matrix &transform, const material &m):
+    transform{transform},
+    m{m}
+    {}
+
 const matrix &shape::getTransform() const {
     return transform;
 }

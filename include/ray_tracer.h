@@ -13,6 +13,7 @@
 #include "shape/sphere/sphere.h"
 #include "shape/material.h"
 #include "light/pointLight.h"
+#include "world/world.h"
 
 namespace rayTracer {
     bool equalWithError(const double &lhs, const double &rhs);

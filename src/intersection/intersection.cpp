@@ -3,7 +3,7 @@
 
 using namespace rayTracer;
 
-intersection::intersection(const double &t, const shape &object):
+intersection::intersection(const double &t, const std::shared_ptr<const shape> &object):
     t{t},
     object{object}
     {}
@@ -13,7 +13,7 @@ const double &intersection::getT() const {
 }
 
 const shape &intersection::getObject() const {
-    return object;
+    return *object.get();
 }
 
 bool intersection::operator==(const intersection &rhs) const {
