@@ -17,7 +17,7 @@ namespace rayTracer {
             tuple getPosition(const double &t) const;
             ray transform(const matrix &m) const;
 
-            bool operator==(const ray &rhs);
+            bool operator==(const ray &rhs) const;
 
             friend std::ostream &operator<<(std::ostream &os, const ray &r);
     };

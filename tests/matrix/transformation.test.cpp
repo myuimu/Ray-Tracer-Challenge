@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(reflectPoint) {
 BOOST_AUTO_TEST_CASE(xRotationMatrix) {
     auto p = point(0, 1, 0);
     auto halfQuarter = xRotation(M_PI / 4);
-    auto fullQuarter = xRotation(M_PI / 2);
+    auto fullQuarter = xRotation(M_PI_2);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(0, sqrt(2) / 2, sqrt(2) / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(0, 0, 1));
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(xRotationInverse) {
 BOOST_AUTO_TEST_CASE(yRotationMatrix) {
     auto p = point(0, 0, 1);
     auto halfQuarter = yRotation(M_PI / 4);
-    auto fullQuarter = yRotation(M_PI / 2);
+    auto fullQuarter = yRotation(M_PI_2);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(sqrt(2) / 2, 0, sqrt(2) / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(1, 0, 0));
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(yRotationMatrix) {
 BOOST_AUTO_TEST_CASE(zRotationMatrix) {
     auto p = point(0, 1, 0);
     auto halfQuarter = zRotation(M_PI / 4);
-    auto fullQuarter = zRotation(M_PI / 2);
+    auto fullQuarter = zRotation(M_PI_2);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(-(sqrt(2) / 2), sqrt(2) / 2, 0));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(-1, 0, 0));
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(shearingZInProportionToY) {
 
 BOOST_AUTO_TEST_CASE(applyingTransformationsInSequence) {
     auto p1 = point(1, 0, 1);
-    auto transform1 = xRotation(M_PI / 2);
+    auto transform1 = xRotation(M_PI_2);
     auto transform2 = scaling(5, 5, 5);
     auto transform3 = translation(10, 5, 7);
 
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(applyingTransformationsInSequence) {
 
 BOOST_AUTO_TEST_CASE(chainedTransformationsInReverseOrder) {
     auto p = point(1, 0, 1);
-    auto transform1 = xRotation(M_PI / 2);
+    auto transform1 = xRotation(M_PI_2);
     auto transform2 = scaling(5, 5, 5);
     auto transform3 = translation(10, 5, 7);
 
@@ -165,11 +165,57 @@ BOOST_AUTO_TEST_CASE(chainedTransformationsInReverseOrder) {
 
 BOOST_AUTO_TEST_CASE(chainedTransformationsFromIdentity) {
     auto p = point(1, 0, 1);
-    auto transform = IDENTITY_MATRIX.rotateX(M_PI / 2)
+    auto transform = IDENTITY_MATRIX.rotateX(M_PI_2)
         .scale(5, 5, 5)
         .translate(10, 5, 7);
 
     BOOST_CHECK_EQUAL(transform * p, point(15, 0, 7));
 }
+
+BOOST_AUTO_TEST_CASE(defaultViewMatrix) {
+    auto from = point(0, 0, 0);
+    auto to = point(0, 0, -1);
+    auto up = vector(0, 1, 0);
+
+    auto t = viewTransform(from, to, up);
+
+    BOOST_CHECK_EQUAL(t, IDENTITY_MATRIX);
+}
+
+BOOST_AUTO_TEST_CASE(positiveZView) {
+    auto from = point(0, 0, 0);
+    auto to = point(0, 0, 1);
+    auto up = vector(0, 1, 0);
+
+    auto t = viewTransform(from, to, up);
+
+    BOOST_CHECK_EQUAL(t, scaling(-1, 1, -1));
+}
+
+BOOST_AUTO_TEST_CASE(viewTransformationMovesWorld) {
+    auto from = point(0, 0, 8);
+    auto to = point(0, 0, 0);
+    auto up = vector(0, 1, 0);
+
+    auto t = viewTransform(from, to, up);
+
+    BOOST_CHECK_EQUAL(t, translation(0, 0, -8));
+}
+
+BOOST_AUTO_TEST_CASE(arbitraryView) {
+    auto from = point(1, 3, 2);
+    auto to = point(4, -2, 8);
+    auto up = vector(1, 1, 0);
+
+    auto t = viewTransform(from, to, up);
+
+    BOOST_CHECK_EQUAL(t, matrix(std::vector<std::vector<double>>({
+        {-0.50709, 0.50709, 0.67612, -2.36643},
+        {0.76772, 0.60609, 0.12122, -2.82843},
+        {-0.35857, 0.59761, -0.71714, 0},
+        {0, 0, 0, 1}
+    })));
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

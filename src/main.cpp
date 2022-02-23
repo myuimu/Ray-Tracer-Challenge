@@ -1,46 +1,46 @@
 #include <iostream>
+#include <memory>
+#include <vector>
 #include "ray_tracer.h"
 
 using namespace rayTracer;
 
 int main() {
-    auto rayOrigin = point(0, 0, -5);
-    int wallZ = 10;
-    double wallSize = 7.0;
-    int canvasPixels = 100;
-    double pixelSize = wallSize / canvasPixels;
-    double half = wallSize / 2;
+    auto floor = std::make_shared<sphere>(sphere(
+        scaling(10, 0.01, 10),
+        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
+    auto leftWall = std::make_shared<sphere>(sphere(
+        scaling(10, 0.01, 10).rotateX(M_PI_2).rotateY(-M_PI_4).translate(0, 0, 5),
+        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
+    auto rightWall = std::make_shared<sphere>(sphere(
+        scaling(10, 0.01, 10).rotateX(M_PI_2).rotateY(M_PI_4).translate(0, 0, 5),
+        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
+    auto middle = std::make_shared<sphere>(sphere(
+        translation(-0.5, 1, 0.5),
+        material(material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200))));
+    auto right = std::make_shared<sphere>(sphere(
+        scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5),
+        material(material(color(0.5, 1, 0.1), 0.1, 0.7, 0.3, 200))));
+    auto left = std::make_shared<sphere>(sphere(
+        scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75),
+        material(material(color(1, 0.8, 0.1), 0.1, 0.7, 0.3, 200))));
 
-    auto wall = canvas(canvasPixels, canvasPixels);
-    auto s = std::make_shared<sphere>(sphere());
-    auto m = material();
-    m.setColor(color(1, 0.2, 1));
-    s->setMaterial(m);
-    auto lightPosition = point(-10, 10, -10);
-    auto lightColor = color(1, 1, 1);
-    auto light = pointLight(lightPosition, lightColor);
+    auto light = pointLight(
+        point(-10, 10, -10),
+        color(1, 1, 1)
+    );
 
-    for (int y = 0; y < canvasPixels; y++) {
-        auto worldY = half - (pixelSize * y);
-        for (int x = 0; x < canvasPixels; x++) {
-            auto worldX = -half + (pixelSize * x);
-            auto position = point(worldX, worldY, wallZ);
+    auto c = camera(1000, 500, M_PI / 3, viewTransform(
+        point(0, 1.5, -5),
+        point(0, 1, 0),
+        vector(0, 1, 0)
+    ));
 
-            auto r = ray(rayOrigin, (position - rayOrigin).normalized());
-            auto xs = s->getIntersections(r);
+    auto spheres = std::vector<std::shared_ptr<shape>>{floor, leftWall, rightWall, middle, right, left};
+    auto lights = std::vector<pointLight>{light};
+    auto w = world(spheres, lights);
 
-            auto hit = getHit(xs);
-            if (hit != xs.end()) {
-                auto point = r.getPosition((*hit).getT());
-                auto normal = (*hit).getObject().getNormal(point);
-                auto eye = -r.getDirection();
-
-                wall.plot(x, y, (*hit).getObject().getMaterial().getLighting(light, point, eye, normal));
-            }
-        }
-    }
-
-    std::cout << wall;
+    std::cout << c.render(w);
 
     return 0;
 }

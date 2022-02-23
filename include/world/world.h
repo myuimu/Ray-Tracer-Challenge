@@ -13,7 +13,6 @@ namespace rayTracer {
             std::vector<std::shared_ptr<shape>> objects;
             std::vector<pointLight> lights;
         public:
-            world();
             world(const std::vector<std::shared_ptr<shape>> &objects, const std::vector<pointLight> &lights);
 
             std::vector<intersection> getIntersections(const ray &r) const;

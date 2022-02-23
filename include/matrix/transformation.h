@@ -9,4 +9,5 @@ namespace rayTracer {
     matrix yRotation(const double &r);
     matrix zRotation(const double &r);
     matrix shearing(const double &xY, const double &xZ, const double &yX, const double &yZ, const double &zX, const double &zY);
+    matrix viewTransform(const tuple &from, const tuple &to, const tuple &up);
 }

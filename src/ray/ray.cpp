@@ -23,7 +23,7 @@ ray ray::transform(const matrix &m) const {
     return ray(m * origin, m * direction);
 }
 
-bool ray::operator==(const ray &rhs) {
+bool ray::operator==(const ray &rhs) const {
     return origin == rhs.origin &&
            direction == rhs.direction;
 }

@@ -15,6 +15,7 @@
 #include "light/pointLight.h"
 #include "world/world.h"
 #include "intersection/computations.h"
+#include "world/camera.h"
 
 namespace rayTracer {
     bool equalWithError(const double &lhs, const double &rhs);

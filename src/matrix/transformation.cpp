@@ -63,3 +63,19 @@ matrix rayTracer::shearing(const double &xY, const double &xZ, const double &yX,
     });
     return matrix(values);
 }
+
+matrix rayTracer::viewTransform(const tuple &from, const tuple &to, const tuple &up) {
+    auto forward = (to - from).normalized();
+    auto upn = up.normalized();
+    auto left = forward.cross(upn);
+    auto trueUp = left.cross(forward);
+
+    auto orientation = matrix(std::vector<std::vector<double>>({
+        {left.getX(), left.getY(), left.getZ(), 0},
+        {trueUp.getX(), trueUp.getY(), trueUp.getZ(), 0},
+        {-forward.getX(), -forward.getY(), -forward.getZ(), 0},
+        {0, 0, 0, 1}
+    }));
+
+    return orientation * translation(-from.getX(), -from.getY(), -from.getZ());
+}
