@@ -1,6 +1,4 @@
-#include "intersection/computations.h"
-#include "intersection/intersection.h"
-#include "shape/shape.h"
+#include "ray_tracer.h"
 
 using namespace rayTracer;
 
@@ -17,6 +15,8 @@ computations::computations(const intersection &i, const ray &r) {
     } else {
         inside = false;
     }
+
+    overPoint = point + (normalV * EPSILON);
 }
 
 const double &computations::getT() const {
@@ -29,6 +29,10 @@ const shape &computations::getObject() const {
 
 const tuple &computations::getPoint() const {
     return point;
+}
+
+const tuple &computations::getOverPoint() const {
+    return overPoint;
 }
 
 const tuple &computations::getEyeV() const {

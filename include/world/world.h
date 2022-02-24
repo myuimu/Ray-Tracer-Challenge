@@ -18,5 +18,6 @@ namespace rayTracer {
             std::vector<intersection> getIntersections(const ray &r) const;
             color shadeHit(const computations &comps) const;
             color colorAt(const ray &r) const;
+            bool isShadowed(const tuple &p, const pointLight &light) const;
     };
 };

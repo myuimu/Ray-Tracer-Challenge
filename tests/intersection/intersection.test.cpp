@@ -1,6 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include "intersection/intersection.h"
-#include "shape/sphere/sphere.h"
+#include "ray_tracer.h"
 
 using namespace rayTracer;
 
@@ -70,6 +69,17 @@ BOOST_AUTO_TEST_CASE(hitIsLowestNonNegativeIntersection) {
     auto i = getHit(xs);
 
     BOOST_CHECK_EQUAL(*i, i4);
+}
+
+BOOST_AUTO_TEST_CASE(hitShouldOffsetPoint) {
+    auto r = ray(point(0, 0, -5), vector(0, 0, 1));
+    auto s = std::make_shared<sphere>(sphere(translation(0, 0, 1), material()));
+    auto i = intersection(5, s);
+
+    auto comps = computations(i, r);
+
+    BOOST_CHECK_LT(comps.getOverPoint().getZ(), -EPSILON / 2);
+    BOOST_CHECK_GT(comps.getPoint().getZ(), comps.getOverPoint().getZ());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

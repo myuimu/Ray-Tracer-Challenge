@@ -31,7 +31,7 @@ namespace rayTracer {
             void setSpecular(const double &v);
             void setShininess(const double &v);
 
-            color getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV) const;
+            color getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const;
 
             bool operator==(const material &rhs) const;
 

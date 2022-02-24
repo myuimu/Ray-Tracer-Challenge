@@ -5,12 +5,11 @@ using namespace rayTracer;
 
 const auto SPHERE_1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)));
 const auto SPHERE_2 = std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material()));
+const auto TEST_LIGHT = pointLight(point(-10, 10, -10), color(1, 1, 1));
 
 const auto TEST_WORLD = world(
     std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2}, 
-    std::vector<pointLight>{
-        pointLight(point(-10, 10, -10), color(1, 1, 1))
-    });
+    std::vector<pointLight>{TEST_LIGHT});
 
 BOOST_AUTO_TEST_SUITE(worldTest)
 
@@ -80,6 +79,46 @@ BOOST_AUTO_TEST_CASE(intersectionBehindRay) {
 
     auto c = w.colorAt(r);
     BOOST_CHECK_EQUAL(c, color(1, 1, 1));
+}
+
+BOOST_AUTO_TEST_CASE(noShadowWhenNothingBetwenLightAndPoint) {
+    auto p = point(0, 10, 0);
+
+    BOOST_CHECK_EQUAL(TEST_WORLD.isShadowed(p, TEST_LIGHT), false);
+}
+
+BOOST_AUTO_TEST_CASE(shadowedWhenObjectBetweenPointAndLight) {
+    auto p = point(10, -10, 10);
+
+    BOOST_CHECK_EQUAL(TEST_WORLD.isShadowed(p, TEST_LIGHT), true);
+}
+
+BOOST_AUTO_TEST_CASE(noShadowWhenObjectBehindLight) {
+    auto p = point(-20, 20, -20);
+
+    BOOST_CHECK_EQUAL(TEST_WORLD.isShadowed(p, TEST_LIGHT), false);
+}
+
+BOOST_AUTO_TEST_CASE(noShadowWhenPointBetweenObjectAndLight) {
+    auto p = point(-2, 2, -2);
+
+    BOOST_CHECK_EQUAL(TEST_WORLD.isShadowed(p, TEST_LIGHT), false);
+}
+
+BOOST_AUTO_TEST_CASE(shadeHitIntersectionInShadow) {
+    auto s1 = std::make_shared<sphere>(sphere());
+    auto s2 = std::make_shared<sphere>(sphere(translation(0, 0, 10), material()));
+    auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{s1, s2},
+        std::vector<pointLight>{light});
+    auto r = ray(point(0, 0, 5), vector(0, 0, 1));
+    auto i = intersection(4, s2);
+
+    auto comps = computations(i, r);
+    auto c = w.shadeHit(comps);
+
+    BOOST_CHECK_EQUAL(c, color(0.1, 0.1, 0.1));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

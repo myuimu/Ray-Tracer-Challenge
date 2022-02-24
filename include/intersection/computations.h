@@ -12,6 +12,7 @@ namespace rayTracer {
             double t;
             std::shared_ptr<const shape> object;
             tuple point;
+            tuple overPoint;
             tuple eyeV;
             tuple normalV;
             bool inside;
@@ -21,6 +22,7 @@ namespace rayTracer {
             const double &getT() const;
             const shape &getObject() const;
             const tuple &getPoint() const;
+            const tuple &getOverPoint() const;
             const tuple &getEyeV() const;
             const tuple &getNormalV() const;
             const bool &isInside() const;

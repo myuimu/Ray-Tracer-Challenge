@@ -82,7 +82,7 @@ bool material::operator==(const material &rhs) const {
         shininess == rhs.shininess;
 }
 
-color material::getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV) const {
+color material::getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const {
     auto effectiveColor = c * light.getIntensity();
     auto lightV = (light.getPosition() - position).normalized();
     auto ambientContribution = effectiveColor * ambient;
@@ -91,7 +91,7 @@ color material::getLighting(const pointLight &light, const tuple &position, cons
     auto diffuseContribution = BLACK;
     auto specularContribution = BLACK;
 
-    if (lightDotNormal >= 0) {
+    if (lightDotNormal >= 0 && !inShadow) {
         diffuseContribution = effectiveColor * diffuse * lightDotNormal;
 
         auto reflectV = -lightV.reflect(normalV);

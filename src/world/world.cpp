@@ -32,7 +32,8 @@ color world::shadeHit(const computations &comps) const {
             light, 
             comps.getPoint(), 
             comps.getEyeV(), 
-            comps.getNormalV());
+            comps.getNormalV(),
+            isShadowed(comps.getOverPoint(), light));
     }
 
     return c;
@@ -49,4 +50,19 @@ color world::colorAt(const ray &r) const {
     auto comps = computations(*hit, r);
 
     return shadeHit(comps);
+}
+
+bool world::isShadowed(const tuple &p, const pointLight &light) const {
+    auto v = light.getPosition() - p;
+    auto distance = v.getMagnitude();
+    auto direction = v.normalized();
+
+    auto r = ray(p, direction);
+    auto intersections = getIntersections(r);
+    auto hit = getHit(intersections);
+
+    if (hit != intersections.end() && (*hit).getT() < distance) {
+        return true;
+    }
+    return false;
 }
