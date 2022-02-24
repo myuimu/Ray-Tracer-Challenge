@@ -28,6 +28,20 @@ void shape::setMaterial(const material &newMaterial) {
     m = newMaterial;
 }
 
+std::vector<intersection> shape::getIntersections(const ray &r) const {
+    return getLocalIntersections(r.transform(transform.getInverse()));
+}
+
+tuple shape::getNormal(const tuple &p) const {
+    auto inverseTransform = transform.getInverse();
+
+    auto localPoint = inverseTransform * p;
+    auto localNormal = getLocalNormal(localPoint);
+
+    auto worldNormal = inverseTransform.getTranspose() * localNormal;
+    return worldNormal.toVector().normalized();
+}
+
 std::ostream &rayTracer::operator<<(std::ostream &os, const shape &s) {
     os << s.toString();
     return os;

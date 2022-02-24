@@ -52,21 +52,6 @@ BOOST_AUTO_TEST_CASE(intersectionBehindRay) {
     BOOST_CHECK_EQUAL(intersections[1].getT(), -4);
 }
 
-BOOST_AUTO_TEST_CASE(defaultTransformation) {
-    auto s = std::make_shared<sphere>(sphere());
-
-    BOOST_CHECK_EQUAL(s->getTransform(), IDENTITY_MATRIX);
-}
-
-BOOST_AUTO_TEST_CASE(changeTransformation) {
-    auto s = std::make_shared<sphere>(sphere());
-    auto t = translation(2, 3, 4);
-
-    s->setTransform(t);
-
-    BOOST_CHECK_EQUAL(s->getTransform(), t);
-}
-
 BOOST_AUTO_TEST_CASE(intersectScaledSphere) {
     auto r = ray(point(0, 0, -5), vector(0, 0, 1));
     auto s = std::make_shared<sphere>(sphere());
@@ -145,24 +130,6 @@ BOOST_AUTO_TEST_CASE(normalOfScaledAndRotatedSphere) {
     auto n = s->getNormal(point(0, sqrt(2) / 2, -sqrt(2) / 2));
 
     BOOST_CHECK_EQUAL(n, vector(0, 0.97014, -0.24254));
-}
-
-BOOST_AUTO_TEST_CASE(hasDefaultMaterial) {
-    auto s = std::make_shared<sphere>(sphere());
-
-    auto m = s->getMaterial();
-
-    BOOST_CHECK_EQUAL(m, material());
-}
-
-BOOST_AUTO_TEST_CASE(canAssignMaterial) {
-    auto s = std::make_shared<sphere>(sphere());
-    auto m = material();
-    m.setAmbient(1);
-    
-    s->setMaterial(m);
-
-    BOOST_CHECK_EQUAL(s->getMaterial(), m);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

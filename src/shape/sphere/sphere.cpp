@@ -17,15 +17,13 @@ sphere::sphere(const matrix &transform, const material &m):
     radius{1}
     {}
 
-std::vector<intersection> sphere::getIntersections(const ray &r) const {
-    auto newRay = r.transform(transform.getInverse());
-
+std::vector<intersection> sphere::getLocalIntersections(const ray &r) const {
     auto intersections = std::vector<intersection>();
     
-    auto sphereToRay = newRay.getOrigin() - origin;
+    auto sphereToRay = r.getOrigin() - origin;
 
-    auto a = newRay.getDirection().dot(newRay.getDirection());
-    auto b = 2 * newRay.getDirection().dot(sphereToRay);
+    auto a = r.getDirection().dot(r.getDirection());
+    auto b = 2 * r.getDirection().dot(sphereToRay);
     auto c = sphereToRay.dot(sphereToRay) - 1;
 
     auto discriminant = pow(b, 2) - (4 * a * c);
@@ -39,13 +37,8 @@ std::vector<intersection> sphere::getIntersections(const ray &r) const {
     return intersections;
 }
 
-tuple sphere::getNormal(const tuple &p) const {
-    auto inverseTransform = transform.getInverse();
-    auto objectPoint = inverseTransform * p;
-    auto objectNormal = objectPoint - origin;
-    auto worldNormal = inverseTransform.getTranspose() * objectNormal;
-
-    return worldNormal.toVector().normalized();
+tuple sphere::getLocalNormal(const tuple &p) const {
+    return p - origin;
 }
 
 bool sphere::isEqual(const shape &s) const {

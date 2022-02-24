@@ -12,6 +12,8 @@ namespace rayTracer {
             material m;
 
             virtual bool isEqual(const shape &s) const;
+            virtual std::vector<intersection> getLocalIntersections(const ray &r) const = 0;
+            virtual tuple getLocalNormal(const tuple &p) const = 0;
         public:
             shape();
             shape(const matrix &transform, const material &m);
@@ -23,8 +25,8 @@ namespace rayTracer {
             const material &getMaterial() const;
             void setMaterial(const material &newMaterial);
 
-            virtual std::vector<intersection> getIntersections(const ray &r) const = 0;
-            virtual tuple getNormal(const tuple &p) const = 0;
+            std::vector<intersection> getIntersections(const ray &r) const;
+            tuple getNormal(const tuple &p) const;
             virtual std::string toString() const = 0;
 
             bool operator==(const shape &s) const;

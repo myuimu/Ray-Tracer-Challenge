@@ -13,8 +13,8 @@ namespace rayTracer {
 
             std::string toString() const;
 
-            std::vector<intersection> getIntersections(const ray &r) const;
-            tuple getNormal(const tuple &p) const;
+            std::vector<intersection> getLocalIntersections(const ray &r) const;
+            tuple getLocalNormal(const tuple &p) const;
 
             virtual bool isEqual(const shape &s) const;
     };
