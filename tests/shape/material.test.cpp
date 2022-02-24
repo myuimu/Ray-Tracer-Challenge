@@ -1,5 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include "shape/material.h"
+#include "shape/sphere/sphere.h"
 #include <math.h>
 
 using namespace rayTracer;
@@ -17,6 +18,7 @@ BOOST_AUTO_TEST_CASE(defaultMaterial) {
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest1) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, 0, -1);
@@ -24,12 +26,13 @@ BOOST_AUTO_TEST_CASE(lightingTest1) {
     auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(1.9, 1.9, 1.9));
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest2) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, 0, -1);
@@ -37,12 +40,13 @@ BOOST_AUTO_TEST_CASE(lightingTest2) {
     auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(1.9, 1.9, 1.9));
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest3) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, sqrt(2) / 2, sqrt(2) / 2);
@@ -50,12 +54,13 @@ BOOST_AUTO_TEST_CASE(lightingTest3) {
     auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(1.0, 1.0, 1.0));
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest4) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, 0, -1);
@@ -63,12 +68,13 @@ BOOST_AUTO_TEST_CASE(lightingTest4) {
     auto light = pointLight(point(0, 10, -10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(0.7364, 0.7364, 0.7364));
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest5) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, -sqrt(2) / 2, -sqrt(2) / 2);
@@ -76,12 +82,13 @@ BOOST_AUTO_TEST_CASE(lightingTest5) {
     auto light = pointLight(point(0, 10, -10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(1.6364, 1.6364, 1.6364));
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest6) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, 0, -1);
@@ -89,12 +96,13 @@ BOOST_AUTO_TEST_CASE(lightingTest6) {
     auto light = pointLight(point(0, 0, 10), color(1, 1, 1));
     auto inShadow = false;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(0.1, 0.1, 0.1));
 }
 
 BOOST_AUTO_TEST_CASE(lightingInShadow) {
+    auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
     auto eyeV = vector(0, 0, -1);
@@ -102,7 +110,7 @@ BOOST_AUTO_TEST_CASE(lightingInShadow) {
     auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
     auto inShadow = true;
 
-    auto result = m.getLighting(light, position, eyeV, normalV, inShadow);
+    auto result = m.getLighting(light, object, position, eyeV, normalV, inShadow);
 
     BOOST_CHECK_EQUAL(result, color(0.1, 0.1, 0.1));
 }

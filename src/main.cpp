@@ -9,7 +9,8 @@ int main() {
     auto floor = std::make_shared<plane>(plane());
     auto middle = std::make_shared<sphere>(sphere(
         translation(-0.5, 1, 0.5),
-        material(material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200))));
+        material(material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200, 
+            std::make_shared<checker>(checker(WHITE, BLACK, scaling(0.5, 0.5, 0.5)))))));
     auto right = std::make_shared<sphere>(sphere(
         scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5),
         material(material(color(0.5, 1, 0.1), 0.1, 0.7, 0.3, 200))));
@@ -22,7 +23,7 @@ int main() {
         color(1, 1, 1)
     );
 
-    auto c = camera(1000, 500, M_PI / 3, viewTransform(
+    auto c = camera(500, 250, M_PI / 3, viewTransform(
         point(0, 1.5, -5),
         point(0, 1, 0),
         vector(0, 1, 0)

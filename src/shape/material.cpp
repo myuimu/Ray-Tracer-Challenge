@@ -21,6 +21,20 @@ material::material(const color &c,
     setSpecular(specular);
     setShininess(shininess);
 }
+
+material::material(const color &c, 
+                    const double &ambient, 
+                    const double &diffuse,
+                    const double &specular,
+                    const double &shininess,
+                    const std::shared_ptr<pattern> p) {
+    setColor(c);
+    setAmbient(ambient);
+    setDiffuse(diffuse);
+    setSpecular(specular);
+    setShininess(shininess);
+    setPattern(p);
+}
             
 const color &material::getColor() const {
     return c;
@@ -40,6 +54,10 @@ const double &material::getSpecular() const {
 
 const double &material::getShininess() const {
     return shininess;
+}
+
+const pattern &material::getPattern() const {
+    return *p.get();
 }
 
 void material::setColor(const color &newColor) {
@@ -74,6 +92,10 @@ void material::setShininess(const double &v) {
     shininess = v;
 }
 
+void material::setPattern(const std::shared_ptr<pattern> newPattern) {
+    p = newPattern;
+}
+
 bool material::operator==(const material &rhs) const {
     return c == rhs.c && 
         ambient == rhs.ambient &&
@@ -82,8 +104,13 @@ bool material::operator==(const material &rhs) const {
         shininess == rhs.shininess;
 }
 
-color material::getLighting(const pointLight &light, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const {
-    auto effectiveColor = c * light.getIntensity();
+color material::getLighting(const pointLight &light, const shape &object, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const {
+    auto effectiveColor = c;
+    if (p != nullptr) {
+        effectiveColor = p->getColorForShape(object, position);
+    }
+    effectiveColor = effectiveColor * light.getIntensity();
+    
     auto lightV = (light.getPosition() - position).normalized();
     auto ambientContribution = effectiveColor * ambient;
 

@@ -30,6 +30,7 @@ color world::shadeHit(const computations &comps) const {
     for (auto &light : lights) {
         c = c + comps.getObject().getMaterial().getLighting(
             light, 
+            comps.getObject(),
             comps.getPoint(), 
             comps.getEyeV(), 
             comps.getNormalV(),

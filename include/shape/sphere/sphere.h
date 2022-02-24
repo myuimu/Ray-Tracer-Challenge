@@ -16,6 +16,6 @@ namespace rayTracer {
             std::vector<intersection> getLocalIntersections(const ray &r) const;
             tuple getLocalNormal(const tuple &p) const;
 
-            virtual bool isEqual(const shape &s) const;
+            bool isEqual(const shape &s) const;
     };
 };

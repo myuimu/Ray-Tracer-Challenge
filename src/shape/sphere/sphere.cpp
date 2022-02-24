@@ -42,9 +42,10 @@ tuple sphere::getLocalNormal(const tuple &p) const {
 }
 
 bool sphere::isEqual(const shape &s) const {
+    bool shapeEqual = shape::isEqual(s);
     const sphere &sSphere = static_cast<const sphere &>(s);
 
-    return origin == sSphere.origin && equalWithError(radius, sSphere.radius);
+    return shapeEqual && origin == sSphere.origin && equalWithError(radius, sSphere.radius);
 }
 
 std::string sphere::toString() const {
