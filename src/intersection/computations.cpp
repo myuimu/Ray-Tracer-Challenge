@@ -17,6 +17,7 @@ computations::computations(const intersection &i, const ray &r) {
     }
 
     overPoint = point + (normalV * EPSILON);
+    reflectV = r.getDirection().reflect(normalV);
 }
 
 const double &computations::getT() const {
@@ -41,6 +42,10 @@ const tuple &computations::getEyeV() const {
 
 const tuple &computations::getNormalV() const {
     return normalV;
+}
+
+const tuple &computations::getReflectV() const {
+    return reflectV;
 }
 
 const bool &computations::isInside() const {

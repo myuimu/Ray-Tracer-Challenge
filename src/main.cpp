@@ -6,32 +6,37 @@
 using namespace rayTracer;
 
 int main() {
-    auto floor = std::make_shared<plane>(plane());
+    auto floor = std::make_shared<plane>(plane(
+        IDENTITY_MATRIX, 
+        material(color(1, 1, 1), 0.1, 0.7, 0.3, 200, 0.5,
+            std::make_shared<checker>(checker(WHITE, BLACK)))));
+    auto mirror = std::make_shared<plane>(plane(
+        xRotation(M_PI_2).rotateY(M_PI_4).translate(0, 0, 5), 
+        material(color(1, 1, 1), 0, 0.1, 0.2, 10, 1)));
     auto middle = std::make_shared<sphere>(sphere(
         translation(-0.5, 1, 0.5),
-        material(material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200, 
-            std::make_shared<checker>(checker(WHITE, BLACK, scaling(0.5, 0.5, 0.5)))))));
+        material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200, 0)));
     auto right = std::make_shared<sphere>(sphere(
         scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5),
-        material(material(color(0.5, 1, 0.1), 0.1, 0.7, 0.3, 200))));
+        material(color(0.5, 1, 0.1), 0.1, 0.7, 0.3, 200, 0)));
     auto left = std::make_shared<sphere>(sphere(
         scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75),
-        material(material(color(1, 0.8, 0.1), 0.1, 0.7, 0.3, 200))));
+        material(color(1, 0.8, 0.1), 0.1, 0.7, 0.3, 200, 0)));
 
     auto light = pointLight(
         point(-10, 10, -10),
         color(1, 1, 1)
     );
 
-    auto c = camera(500, 250, M_PI / 3, viewTransform(
+    auto c = camera(1000, 500, M_PI / 3, viewTransform(
         point(0, 1.5, -5),
         point(0, 1, 0),
         vector(0, 1, 0)
     ));
 
-    auto spheres = std::vector<std::shared_ptr<shape>>{floor, middle, right, left};
+    auto shapes = std::vector<std::shared_ptr<shape>>{floor, mirror, middle, right, left};
     auto lights = std::vector<pointLight>{light};
-    auto w = world(spheres, lights);
+    auto w = world(shapes, lights);
 
     std::cout << c.render(w);
 

@@ -3,7 +3,7 @@
 
 using namespace rayTracer;
 
-const auto SPHERE_1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)));
+const auto SPHERE_1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200, 0)));
 const auto SPHERE_2 = std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material()));
 const auto TEST_LIGHT = pointLight(point(-10, 10, -10), color(1, 1, 1));
 
@@ -70,8 +70,8 @@ BOOST_AUTO_TEST_CASE(rayHits) {
 BOOST_AUTO_TEST_CASE(intersectionBehindRay) {
     auto w = world(
         std::vector<std::shared_ptr<shape>>{
-            std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 1, 0.7, 0.2, 0))),
-            std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material(color(1, 1, 1), 1, 0, 0, 0)))}, 
+            std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 1, 0.7, 0.2, 0, 0))),
+            std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material(color(1, 1, 1), 1, 0, 0, 0, 0)))}, 
         std::vector<pointLight>{
             pointLight(point(0, 0.25, 0), color(1, 1, 1))
         });
@@ -119,6 +119,74 @@ BOOST_AUTO_TEST_CASE(shadeHitIntersectionInShadow) {
     auto c = w.shadeHit(comps);
 
     BOOST_CHECK_EQUAL(c, color(0.1, 0.1, 0.1));
+}
+
+BOOST_AUTO_TEST_CASE(reflectedColorOfNonreflectiveMaterial) {
+    auto r = ray(point(0, 0, 0), vector(0, 0, 1));
+    auto s = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(1, 1, 1), 1, 0.9, 0.9, 200, 0)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{SPHERE_1, s}, 
+        std::vector<pointLight>{TEST_LIGHT});
+    auto i = intersection(1, s);
+
+    auto comps = computations(i, r);
+    auto c = w.getReflectedColor(comps, 1);
+
+    BOOST_CHECK_EQUAL(c, color(0, 0, 0));
+}
+
+BOOST_AUTO_TEST_CASE(reflectedColorOfReflectiveMaterial) {
+    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
+        std::vector<pointLight>{TEST_LIGHT});
+    auto i = intersection(sqrt(2), s);
+
+    auto comps = computations(i, r);
+    auto c = w.getReflectedColor(comps, 1);
+
+    BOOST_CHECK_EQUAL(c, color(0.19032, 0.2379, 0.14274));
+}
+
+BOOST_AUTO_TEST_CASE(shadeHitReflectiveMaterial) {
+    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
+        std::vector<pointLight>{TEST_LIGHT});
+    auto i = intersection(sqrt(2), s);
+
+    auto comps = computations(i, r);
+    auto c = w.shadeHit(comps);
+
+    BOOST_CHECK_EQUAL(c, color(0.87677, 0.92436, 0.82918));
+}
+
+BOOST_AUTO_TEST_CASE(avoidInfiniteRecursion) {
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{
+            std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 1))),
+            std::make_shared<plane>(plane(translation(0, 1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 1)))
+        },
+        std::vector<pointLight>{pointLight(point(0, 0, 0), color(1, 1, 1))}
+    );
+    auto r = ray(point(0, 0, 0), vector(0, 1, 0));
+    BOOST_REQUIRE_NO_THROW(w.colorAt(r));
+}
+
+BOOST_AUTO_TEST_CASE(limitRecursion) {
+    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
+        std::vector<pointLight>{TEST_LIGHT});
+    auto i = intersection(sqrt(2), s);
+
+    auto comps = computations(i, r);
+    auto c = w.getReflectedColor(comps, 0);
+
+    BOOST_CHECK_EQUAL(c, color(0, 0, 0));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -24,23 +24,25 @@ std::vector<intersection> world::getIntersections(const ray &r) const {
     return intersections;
 }
 
-color world::shadeHit(const computations &comps) const {
+color world::shadeHit(const computations &comps, const int &remaining) const {
     auto c = BLACK;
+    auto reflected = BLACK;
 
     for (auto &light : lights) {
         c = c + comps.getObject().getMaterial().getLighting(
             light, 
             comps.getObject(),
-            comps.getPoint(), 
+            comps.getOverPoint(), 
             comps.getEyeV(), 
             comps.getNormalV(),
             isShadowed(comps.getOverPoint(), light));
+        reflected = reflected + getReflectedColor(comps, remaining);
     }
 
-    return c;
+    return c + reflected;
 }
 
-color world::colorAt(const ray &r) const {
+color world::colorAt(const ray &r, const int &remaining) const {
     auto intersections = getIntersections(r);
     auto hit = getHit(intersections);
 
@@ -50,7 +52,7 @@ color world::colorAt(const ray &r) const {
 
     auto comps = computations(*hit, r);
 
-    return shadeHit(comps);
+    return shadeHit(comps, remaining);
 }
 
 bool world::isShadowed(const tuple &p, const pointLight &light) const {
@@ -66,4 +68,15 @@ bool world::isShadowed(const tuple &p, const pointLight &light) const {
         return true;
     }
     return false;
+}
+
+color world::getReflectedColor(const computations &comps, const int &remaining) const {
+    if (remaining < 1 || comps.getObject().getMaterial().getReflective() == 0) {
+        return BLACK;
+    }
+
+    auto reflectRay = ray(comps.getOverPoint(), comps.getReflectV());
+    auto reflectColor = colorAt(reflectRay, remaining - 1);
+
+    return reflectColor * comps.getObject().getMaterial().getReflective();
 }

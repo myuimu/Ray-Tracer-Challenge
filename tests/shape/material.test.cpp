@@ -115,4 +115,10 @@ BOOST_AUTO_TEST_CASE(lightingInShadow) {
     BOOST_CHECK_EQUAL(result, color(0.1, 0.1, 0.1));
 }
 
+BOOST_AUTO_TEST_CASE(defaultReflective) {
+    auto m = material();
+
+    BOOST_CHECK_EQUAL(m.getReflective(), 0);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

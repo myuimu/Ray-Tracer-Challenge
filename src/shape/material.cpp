@@ -7,19 +7,22 @@ material::material():
     ambient{0.1},
     diffuse{0.9},
     specular{0.9},
-    shininess{200.0}
+    shininess{200.0},
+    reflective{0}
     {}
 
 material::material(const color &c, 
                     const double &ambient, 
                     const double &diffuse,
                     const double &specular,
-                    const double &shininess) {
+                    const double &shininess,
+                    const double &reflective) {
     setColor(c);
     setAmbient(ambient);
     setDiffuse(diffuse);
     setSpecular(specular);
     setShininess(shininess);
+    setReflective(reflective);
 }
 
 material::material(const color &c, 
@@ -27,12 +30,14 @@ material::material(const color &c,
                     const double &diffuse,
                     const double &specular,
                     const double &shininess,
+                    const double &reflective,
                     const std::shared_ptr<pattern> p) {
     setColor(c);
     setAmbient(ambient);
     setDiffuse(diffuse);
     setSpecular(specular);
     setShininess(shininess);
+    setReflective(reflective);
     setPattern(p);
 }
             
@@ -54,6 +59,10 @@ const double &material::getSpecular() const {
 
 const double &material::getShininess() const {
     return shininess;
+}
+
+const double &material::getReflective() const {
+    return reflective;
 }
 
 const pattern &material::getPattern() const {
@@ -90,6 +99,13 @@ void material::setShininess(const double &v) {
         throw std::invalid_argument("Cannot set shininess value < 0!");
     }
     shininess = v;
+}
+
+void material::setReflective(const double &v) {
+    if(v < 0) {
+        throw std::invalid_argument("Cannot set reflective value < 0!");
+    }
+    reflective = v;
 }
 
 void material::setPattern(const std::shared_ptr<pattern> newPattern) {

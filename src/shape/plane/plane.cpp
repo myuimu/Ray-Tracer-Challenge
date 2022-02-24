@@ -2,6 +2,12 @@
 
 using namespace rayTracer;
 
+plane::plane() {}
+
+plane::plane(const matrix &transform, const material &m):
+    shape(transform, m)
+    {}
+
 std::string plane::toString() const {
     return "Plane";
 }

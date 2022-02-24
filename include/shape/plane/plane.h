@@ -7,5 +7,8 @@ namespace rayTracer {
             std::string toString() const;
             std::vector<intersection> getLocalIntersections(const ray &r) const;
             tuple getLocalNormal(const tuple &p) const;
+        public:
+            plane();
+            plane(const matrix &transform, const material &m);
     };
 };

@@ -16,8 +16,9 @@ namespace rayTracer {
             world(const std::vector<std::shared_ptr<shape>> &objects, const std::vector<pointLight> &lights);
 
             std::vector<intersection> getIntersections(const ray &r) const;
-            color shadeHit(const computations &comps) const;
-            color colorAt(const ray &r) const;
+            color shadeHit(const computations &comps, const int &remaining = 5) const;
+            color colorAt(const ray &r, const int &remaining = 5) const;
             bool isShadowed(const tuple &p, const pointLight &light) const;
+            color getReflectedColor(const computations &comps, const int &remaining) const;
     };
 };

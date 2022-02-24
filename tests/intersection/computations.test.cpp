@@ -2,6 +2,7 @@
 #include "intersection/computations.h"
 #include "intersection/intersection.h"
 #include "shape/sphere/sphere.h"
+#include "shape/plane/plane.h"
 #include "tuple/tuple.h"
 
 using namespace rayTracer;
@@ -43,6 +44,16 @@ BOOST_AUTO_TEST_CASE(intersectioninside) {
     BOOST_CHECK_EQUAL(comps.getEyeV(), vector(0, 0, -1));
     BOOST_CHECK_EQUAL(comps.getNormalV(), vector(0, 0, -1));
     BOOST_CHECK_EQUAL(comps.isInside(), true);
+}
+
+BOOST_AUTO_TEST_CASE(reflectionVector) {
+    auto s = plane();
+    auto r = ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto i = intersection(sqrt(2), std::make_shared<plane>(s));
+
+    auto comps = computations(i, r);
+
+    BOOST_CHECK_EQUAL(comps.getReflectV(), vector(0, sqrt(2) / 2, sqrt(2) / 2));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

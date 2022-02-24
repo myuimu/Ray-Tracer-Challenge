@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(shapeHasDefaultMaterial) {
 
 BOOST_AUTO_TEST_CASE(assigningMaterial) {
     auto s = testShape();
-    auto m = material(color(1, 1, 1), 1, 0.9, 0.9, 200.0);
+    auto m = material(color(1, 1, 1), 1, 0.9, 0.9, 200.0, 0);
 
     s.setMaterial(m);
 

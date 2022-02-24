@@ -15,6 +15,7 @@ namespace rayTracer {
             tuple overPoint;
             tuple eyeV;
             tuple normalV;
+            tuple reflectV;
             bool inside;
         public:
             computations(const intersection &i, const ray &r);
@@ -25,6 +26,7 @@ namespace rayTracer {
             const tuple &getOverPoint() const;
             const tuple &getEyeV() const;
             const tuple &getNormalV() const;
+            const tuple &getReflectV() const;
             const bool &isInside() const;
     };
 };

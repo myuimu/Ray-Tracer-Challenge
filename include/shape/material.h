@@ -9,23 +9,26 @@ namespace rayTracer {
     class material {
         private:
             color c;
+            std::shared_ptr<pattern> p;
             double ambient;
             double diffuse;
             double specular;
             double shininess;
-            std::shared_ptr<pattern> p;
+            double reflective;
         public:
             material();
             material(const color &c, 
                     const double &ambient, 
                     const double &diffuse,
                     const double &specular,
-                    const double &shininess);
+                    const double &shininess,
+                    const double &reflective);
             material(const color &c, 
                     const double &ambient, 
                     const double &diffuse,
                     const double &specular,
                     const double &shininess,
+                    const double &reflective,
                     const std::shared_ptr<pattern> p);
             
             const color &getColor() const;
@@ -33,6 +36,7 @@ namespace rayTracer {
             const double &getDiffuse() const;
             const double &getSpecular() const;
             const double &getShininess() const;
+            const double &getReflective() const;
             const pattern &getPattern() const;
 
             void setColor(const color &newColor);
@@ -40,6 +44,7 @@ namespace rayTracer {
             void setDiffuse(const double &v);
             void setSpecular(const double &v);
             void setShininess(const double &v);
+            void setReflective(const double &v);
             void setPattern(const std::shared_ptr<pattern> newPattern);
 
             color getLighting(const pointLight &light, const shape &object, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const;

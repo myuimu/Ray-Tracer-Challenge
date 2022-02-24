@@ -5,7 +5,7 @@
 
 using namespace rayTracer;
 
-const auto SPHERE_1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200)));
+const auto SPHERE_1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2, 200, 0)));
 const auto SPHERE_2 = std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material()));
 
 const auto TEST_WORLD = world(
