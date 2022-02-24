@@ -6,15 +6,7 @@
 using namespace rayTracer;
 
 int main() {
-    auto floor = std::make_shared<sphere>(sphere(
-        scaling(10, 0.01, 10),
-        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
-    auto leftWall = std::make_shared<sphere>(sphere(
-        scaling(10, 0.01, 10).rotateX(M_PI_2).rotateY(-M_PI_4).translate(0, 0, 5),
-        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
-    auto rightWall = std::make_shared<sphere>(sphere(
-        scaling(10, 0.01, 10).rotateX(M_PI_2).rotateY(M_PI_4).translate(0, 0, 5),
-        material(material(color(1, 0.9, 0.9), 0.1, 0.9, 0, 200))));
+    auto floor = std::make_shared<plane>(plane());
     auto middle = std::make_shared<sphere>(sphere(
         translation(-0.5, 1, 0.5),
         material(material(color(0.1, 1, 0.5), 0.1, 0.7, 0.3, 200))));
@@ -36,7 +28,7 @@ int main() {
         vector(0, 1, 0)
     ));
 
-    auto spheres = std::vector<std::shared_ptr<shape>>{floor, leftWall, rightWall, middle, right, left};
+    auto spheres = std::vector<std::shared_ptr<shape>>{floor, middle, right, left};
     auto lights = std::vector<pointLight>{light};
     auto w = world(spheres, lights);
 

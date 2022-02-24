@@ -48,7 +48,7 @@ std::ostream &rayTracer::operator<<(std::ostream &os, const shape &s) {
 }
 
 bool shape::isEqual(const shape &s) const {
-    return transform == s.transform;
+    return transform == s.transform && m == s.m;
 }
 
 bool shape::operator==(const shape &s) const {

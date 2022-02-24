@@ -12,6 +12,7 @@ namespace rayTracer {
             material m;
 
             virtual bool isEqual(const shape &s) const;
+            virtual std::string toString() const = 0;
             virtual std::vector<intersection> getLocalIntersections(const ray &r) const = 0;
             virtual tuple getLocalNormal(const tuple &p) const = 0;
         public:
@@ -27,7 +28,6 @@ namespace rayTracer {
 
             std::vector<intersection> getIntersections(const ray &r) const;
             tuple getNormal(const tuple &p) const;
-            virtual std::string toString() const = 0;
 
             bool operator==(const shape &s) const;
             friend std::ostream &operator<<(std::ostream &os, const shape &s);

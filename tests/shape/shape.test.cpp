@@ -11,6 +11,7 @@ auto localPoint = point();
 namespace rayTracer {
     class testShape : public shape {
         private:
+            std::string toString() const {return "testShape";}
             std::vector<intersection> getLocalIntersections(const ray &r) const {
                 localRay = r;
                 return std::vector<intersection>();
@@ -21,7 +22,6 @@ namespace rayTracer {
             }
         public:
             testShape() {}
-            std::string toString() const {return "testShape";}
     };
 };
 
