@@ -10,7 +10,7 @@ list(FILTER RAY_LIB_FILES EXCLUDE REGEX "main")
 file(GLOB_RECURSE RAY_MAIN_FILES CONFIGURE_DEPENDS "src/*.cpp")
 file(GLOB_RECURSE RAY_TEST_FILES CONFIGURE_DEPENDS "src/*.cpp" "tests/*.cpp")
 list(FILTER RAY_TEST_FILES EXCLUDE REGEX "main")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g --std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++17 -ffast-math -O3")
 
 add_library(ray SHARED
     ${RAY_LIB_FILES}
