@@ -121,4 +121,11 @@ BOOST_AUTO_TEST_CASE(defaultReflective) {
     BOOST_CHECK_EQUAL(m.getReflective(), 0);
 }
 
+BOOST_AUTO_TEST_CASE(defaultTransparencyAndRefractiveIndex) {
+    auto m = material();
+
+    BOOST_CHECK_EQUAL(m.getTransparency(), 0.0);
+    BOOST_CHECK_EQUAL(m.getRefractiveIndex(), 1.0);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

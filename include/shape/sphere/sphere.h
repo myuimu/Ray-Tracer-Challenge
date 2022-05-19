@@ -18,4 +18,6 @@ namespace rayTracer {
 
             bool isEqual(const shape &s) const;
     };
+
+    sphere getGlassSphere();
 };

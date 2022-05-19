@@ -17,8 +17,11 @@ namespace rayTracer {
             tuple normalV;
             tuple reflectV;
             bool inside;
+            double exitRefractiveIndex;
+            double enterRefractiveIndex;
         public:
             computations(const intersection &i, const ray &r);
+            computations(const intersection &i, const ray &r, const std::vector<intersection> &currentIntersections);
 
             const double &getT() const;
             const shape &getObject() const;
@@ -28,5 +31,7 @@ namespace rayTracer {
             const tuple &getNormalV() const;
             const tuple &getReflectV() const;
             const bool &isInside() const;
+            const double &getExitRefractiveIndex() const;
+            const double &getEnterRefractiveIndex() const;
     };
 };

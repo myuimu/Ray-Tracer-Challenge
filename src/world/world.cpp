@@ -50,7 +50,7 @@ color world::colorAt(const ray &r, const int &remaining) const {
         return BLACK;
     }
 
-    auto comps = computations(*hit, r);
+    auto comps = computations(*hit, r, intersections);
 
     return shadeHit(comps, remaining);
 }

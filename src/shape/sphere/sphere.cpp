@@ -55,3 +55,7 @@ std::string sphere::toString() const {
     ss << "Radius: " << radius << ")" << std::endl;
     return ss.str();
 }
+
+sphere rayTracer::getGlassSphere() {
+    return {IDENTITY_MATRIX, material(color(1,1,1), 0.1, 0.9, 0.9, 200.0, 0.0, 1.0, 1.5)};
+}
