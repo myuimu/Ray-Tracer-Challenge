@@ -20,6 +20,7 @@ computations::computations(const intersection &i, const ray &r, const std::vecto
     }
 
     overPoint = point + (normalV * EPSILON);
+    underPoint = point - (normalV * EPSILON);
     reflectV = r.getDirection().reflect(normalV);
 
     std::vector<std::shared_ptr<const shape>> containers;
@@ -50,6 +51,25 @@ computations::computations(const intersection &i, const ray &r, const std::vecto
     }
 }
 
+double computations::getReflectance() const {
+    auto cos = eyeV.dot(normalV);
+
+    if (exitRefractiveIndex > enterRefractiveIndex) {
+        auto n = exitRefractiveIndex / enterRefractiveIndex;
+        auto sin2T = pow(n, 2) * (1.0 - pow(cos, 2));
+
+        if (sin2T > 1.0) {
+            return 1.0;
+        }
+
+        cos = sqrt(1.0 - sin2T);
+    }
+
+    auto r0 = pow((exitRefractiveIndex - enterRefractiveIndex) / (exitRefractiveIndex + enterRefractiveIndex), 2);
+
+    return r0 + (1 - r0) * pow(1 - cos, 5);
+}
+
 const double &computations::getT() const {
     return t;
 }
@@ -64,6 +84,10 @@ const tuple &computations::getPoint() const {
 
 const tuple &computations::getOverPoint() const {
     return overPoint;
+}
+
+const tuple &computations::getUnderPoint() const {
+    return underPoint;
 }
 
 const tuple &computations::getEyeV() const {

@@ -23,3 +23,7 @@ color pattern::getColorForShape(const shape &s, const tuple &p) const {
     auto patternPoint = transform.getInverse() * objectPoint;
     return getColorForPoint(patternPoint);
 }
+
+color testPattern::getColorForPoint(const tuple &p) const {
+    return color(p.getX(), p.getY(), p.getZ());
+}

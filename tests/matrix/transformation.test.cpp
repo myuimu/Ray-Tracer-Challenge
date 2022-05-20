@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE(xRotationMatrix) {
     auto halfQuarter = xRotation(M_PI / 4);
     auto fullQuarter = xRotation(M_PI_2);
 
-    BOOST_CHECK_EQUAL(halfQuarter * p, point(0, sqrt(2) / 2, sqrt(2) / 2));
+    BOOST_CHECK_EQUAL(halfQuarter * p, point(0, M_SQRT2 / 2, M_SQRT2 / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(0, 0, 1));
 }
 
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(xRotationInverse) {
     auto p = point(0, 1, 0);
     auto inverseHalfQuarter = xRotation(M_PI / 4).getInverse();
 
-    BOOST_CHECK_EQUAL(inverseHalfQuarter * p, point(0, sqrt(2) / 2, -(sqrt(2) / 2)));
+    BOOST_CHECK_EQUAL(inverseHalfQuarter * p, point(0, M_SQRT2 / 2, -(M_SQRT2 / 2)));
 }
 
 BOOST_AUTO_TEST_CASE(yRotationMatrix) {
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(yRotationMatrix) {
     auto halfQuarter = yRotation(M_PI / 4);
     auto fullQuarter = yRotation(M_PI_2);
 
-    BOOST_CHECK_EQUAL(halfQuarter * p, point(sqrt(2) / 2, 0, sqrt(2) / 2));
+    BOOST_CHECK_EQUAL(halfQuarter * p, point(M_SQRT2 / 2, 0, M_SQRT2 / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(1, 0, 0));
 }
 
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(zRotationMatrix) {
     auto halfQuarter = zRotation(M_PI / 4);
     auto fullQuarter = zRotation(M_PI_2);
 
-    BOOST_CHECK_EQUAL(halfQuarter * p, point(-(sqrt(2) / 2), sqrt(2) / 2, 0));
+    BOOST_CHECK_EQUAL(halfQuarter * p, point(-(M_SQRT2 / 2), M_SQRT2 / 2, 0));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(-1, 0, 0));
 }
 

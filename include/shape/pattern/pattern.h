@@ -13,12 +13,17 @@ namespace rayTracer {
             virtual color getColorForPoint(const tuple &p) const = 0;
         public:
             pattern();
-            pattern(const matrix &transform);
+            explicit pattern(const matrix &transform);
             virtual ~pattern() = default;
 
             const matrix &getTransform() const;
             void setTransform(const matrix &m);
 
             color getColorForShape(const shape &s, const tuple &p) const;
+    };
+
+    class testPattern : public pattern {
+    private:
+        color getColorForPoint(const tuple &p) const;
     };
 };

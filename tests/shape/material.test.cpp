@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(lightingTest3) {
     auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
-    auto eyeV = vector(0, sqrt(2) / 2, sqrt(2) / 2);
+    auto eyeV = vector(0, M_SQRT2 / 2, M_SQRT2 / 2);
     auto normalV = vector(0, 0, -1);
     auto light = pointLight(point(0, 0, -10), color(1, 1, 1));
     auto inShadow = false;
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(lightingTest5) {
     auto object = sphere();
     auto m = material();
     auto position = point(0, 0, 0);
-    auto eyeV = vector(0, -sqrt(2) / 2, -sqrt(2) / 2);
+    auto eyeV = vector(0, -M_SQRT2 / 2, -M_SQRT2 / 2);
     auto normalV = vector(0, 0, -1);
     auto light = pointLight(point(0, 10, -10), color(1, 1, 1));
     auto inShadow = false;
