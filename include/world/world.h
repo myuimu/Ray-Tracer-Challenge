@@ -20,5 +20,6 @@ namespace rayTracer {
             color colorAt(const ray &r, const int &remaining = 5) const;
             bool isShadowed(const tuple &p, const pointLight &light) const;
             color getReflectedColor(const computations &comps, const int &remaining) const;
+            color getRefractedColor(const computations &comps, const int &remaining) const;
     };
 };

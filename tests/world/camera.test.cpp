@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(transformedCameraRay) {
 
     auto r = c.getRayForPixel(100, 50);
 
-    BOOST_CHECK_EQUAL(r, ray(point(0, 2, -5), vector(sqrt(2) / 2, 0, -sqrt(2) / 2)));
+    BOOST_CHECK_EQUAL(r, ray(point(0, 2, -5), vector(M_SQRT2 / 2, 0, -M_SQRT2 / 2)));
 }
 
 BOOST_AUTO_TEST_CASE(renderWorld) {

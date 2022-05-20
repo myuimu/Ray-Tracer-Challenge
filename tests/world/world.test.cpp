@@ -136,12 +136,12 @@ BOOST_AUTO_TEST_CASE(reflectedColorOfNonreflectiveMaterial) {
 }
 
 BOOST_AUTO_TEST_CASE(reflectedColorOfReflectiveMaterial) {
-    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto r = ray(point(0, 0, -3), vector(0, -M_SQRT2 / 2, M_SQRT2 / 2));
     auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
     auto w = world(
         std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
         std::vector<pointLight>{TEST_LIGHT});
-    auto i = intersection(sqrt(2), s);
+    auto i = intersection(M_SQRT2, s);
 
     auto comps = computations(i, r);
     auto c = w.getReflectedColor(comps, 1);
@@ -150,12 +150,12 @@ BOOST_AUTO_TEST_CASE(reflectedColorOfReflectiveMaterial) {
 }
 
 BOOST_AUTO_TEST_CASE(shadeHitReflectiveMaterial) {
-    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto r = ray(point(0, 0, -3), vector(0, -M_SQRT2 / 2, M_SQRT2 / 2));
     auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
     auto w = world(
         std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
         std::vector<pointLight>{TEST_LIGHT});
-    auto i = intersection(sqrt(2), s);
+    auto i = intersection(M_SQRT2, s);
 
     auto comps = computations(i, r);
     auto c = w.shadeHit(comps);
@@ -176,17 +176,131 @@ BOOST_AUTO_TEST_CASE(avoidInfiniteRecursion) {
 }
 
 BOOST_AUTO_TEST_CASE(limitRecursion) {
-    auto r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto r = ray(point(0, 0, -3), vector(0, -M_SQRT2 / 2, M_SQRT2 / 2));
     auto s = std::make_shared<plane>(plane(translation(0, -1, 0), material(color(1, 1, 1), 0.1, 0.9, 0.9, 200, 0.5)));
     auto w = world(
         std::vector<std::shared_ptr<shape>>{SPHERE_1, SPHERE_2, s}, 
         std::vector<pointLight>{TEST_LIGHT});
-    auto i = intersection(sqrt(2), s);
+    auto i = intersection(M_SQRT2, s);
 
     auto comps = computations(i, r);
     auto c = w.getReflectedColor(comps, 0);
 
     BOOST_CHECK_EQUAL(c, color(0, 0, 0));
+}
+
+BOOST_AUTO_TEST_CASE(refractedColorOnOpaqueSurface) {
+    auto r = ray(point(0, 0, -5), vector(0, 0, 1));
+    auto xs = std::vector<intersection>{intersection(4, SPHERE_1), intersection(6, SPHERE_1)};
+
+    auto comps = computations(xs[0], r, xs);
+
+    BOOST_CHECK_EQUAL(TEST_WORLD.getRefractedColor(comps, 5), color(0, 0, 0));
+}
+
+BOOST_AUTO_TEST_CASE(refractedColorAtMaxRecursion) {
+    auto s = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 1, 0.7, 0.2, 200, 0, 1.0, 1.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{
+            s,
+            SPHERE_2},
+        std::vector<pointLight>{
+            TEST_LIGHT
+        });
+    auto r = ray(point(0, 0, -5), vector(0, 0, 1));
+    auto xs = std::vector<intersection>{intersection(4, s), intersection(6, s)};
+
+    auto comps = computations(xs[0], r, xs);
+
+    BOOST_CHECK_EQUAL(w.getRefractedColor(comps, 0), BLACK);
+}
+
+BOOST_AUTO_TEST_CASE(totalInternalReflection) {
+    auto s = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 1, 0.7, 0.2, 200, 0, 1.0, 1.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{
+            s,
+            SPHERE_2},
+        std::vector<pointLight>{
+            TEST_LIGHT
+        });
+    auto r = ray(point(0, 0, M_SQRT2/2), vector(0, 1, 0));
+    auto xs = std::vector<intersection>{intersection(-M_SQRT2/2, s), intersection(M_SQRT2/2, s)};
+
+    auto comps = computations(xs[1], r, xs);
+
+    BOOST_CHECK_EQUAL(w.getRefractedColor(comps, 5), BLACK);
+}
+
+BOOST_AUTO_TEST_CASE(refractedColorWithRefractedRay) {
+        auto s1 = std::make_shared<sphere>(sphere(IDENTITY_MATRIX, material(color(0.8, 1.0, 0.6), 1, 0.7, 0.2, 200, 0, 0, 1.0, std::make_shared<testPattern>(testPattern()))));
+        auto s2 = std::make_shared<sphere>(sphere(scaling(0.5, 0.5, 0.5), material(WHITE, 0.1, 0.9, 0.9, 200.0, 0.0, 1.0, 1.5)));
+        auto w = world(
+            std::vector<std::shared_ptr<shape>>{
+                s1,
+                s2},
+            std::vector<pointLight>{
+                TEST_LIGHT
+            });
+        auto r = ray(point(0, 0, 0.1), vector(0, 1, 0));
+        auto xs = std::vector<intersection>{
+            intersection(-0.9899, s1),
+            intersection(-0.4899, s2),
+            intersection(0.4899, s2),
+            intersection(0.9899, s1)
+        };
+
+        auto comps = computations(xs[2], r, xs);
+
+        BOOST_CHECK_EQUAL(w.getRefractedColor(comps, 5), color(0, 0.99888, 0.04725));
+}
+
+BOOST_AUTO_TEST_CASE(shadeHitWithRefraction) {
+    auto floor = std::make_shared<plane>(plane(
+        translation(0, -1, 0),
+        material(WHITE, 0.1, 0.9, 0.9, 200.0, 0.0, 0.5, 1.5)));
+    auto ball = std::make_shared<sphere>(sphere(
+        translation(0, -3.5, -0.5),
+        material(color(1, 0, 0), 0.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{
+            SPHERE_1,
+            SPHERE_2,
+            floor,
+            ball},
+        std::vector<pointLight>{
+            TEST_LIGHT
+        });
+    auto r = ray(point(0, 0, -3), vector(0, -M_SQRT2/2, M_SQRT2/2));
+    auto xs = std::vector<intersection>{intersection(M_SQRT2, floor)};
+
+    auto comps = computations(xs[0], r, xs);
+
+    BOOST_CHECK_EQUAL(w.shadeHit(comps, 5), color(0.93642, 0.68642, 0.68642));
+}
+
+BOOST_AUTO_TEST_CASE(shadeHitWithReflectance) {
+    auto floor = std::make_shared<plane>(plane(
+        translation(0, -1, 0),
+        material(WHITE, 0.1, 0.9, 0.9, 200.0, 0.5, 0.5, 1.5)));
+    auto ball = std::make_shared<sphere>(sphere(
+        translation(0, -3.5, -0.5),
+        material(color(1, 0, 0), 0.5)));
+    auto w = world(
+        std::vector<std::shared_ptr<shape>>{
+            SPHERE_1,
+            SPHERE_2,
+            floor,
+            ball},
+        std::vector<pointLight>{
+            TEST_LIGHT
+        });
+    auto r = ray(point(0, 0, -3), vector(0, -M_SQRT2/2, M_SQRT2/2));
+    auto xs = std::vector<intersection>{intersection(M_SQRT2, floor)};
+
+    auto comps = computations(xs[0], r, xs);
+
+    BOOST_CHECK_EQUAL(w.shadeHit(comps, 5), color(0.93391, 0.69643, 0.69243));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

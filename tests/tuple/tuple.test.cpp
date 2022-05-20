@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE(reflect45DegreeVector) {
 
 BOOST_AUTO_TEST_CASE(reflectVectorOffSlant) {
     auto v = vector(0, -1, 0);
-    auto n = vector(sqrt(2) / 2, sqrt(2) / 2, 0);
+    auto n = vector(M_SQRT2 / 2, M_SQRT2 / 2, 0);
 
     auto r = v.reflect(n);
 

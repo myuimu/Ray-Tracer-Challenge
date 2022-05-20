@@ -13,7 +13,7 @@ const double &intersection::getT() const {
 }
 
 const shape &intersection::getObject() const {
-    return *object.get();
+    return *object;
 }
 
 const std::shared_ptr<const shape> &intersection::getObjectPtr() const {

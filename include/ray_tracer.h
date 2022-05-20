@@ -1,6 +1,6 @@
 #pragma once
 
-#define EPSILON 0.000019
+#define EPSILON 0.000029
 
 #include "tuple/tuple.h"
 #include "color/color.h"

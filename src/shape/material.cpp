@@ -2,13 +2,22 @@
 
 using namespace rayTracer;
 
-material::material():
-    c{color(1, 1, 1)},
-    ambient{0.1},
-    diffuse{0.9},
-    specular{0.9},
-    shininess{200.0},
-    reflective{0}
+material::material(const color &c, 
+                    const double &ambient, 
+                    const double &diffuse,
+                    const double &specular,
+                    const double &shininess,
+                    const double &reflective,
+                    const double &transparency,
+                    const double &refractiveIndex):
+    c(c),
+    ambient(ambient),
+    diffuse(diffuse),
+    specular(specular),
+    shininess(shininess),
+    reflective(reflective),
+    transparency(transparency),
+    refractiveIndex(refractiveIndex)
     {}
 
 material::material(const color &c, 
@@ -16,28 +25,18 @@ material::material(const color &c,
                     const double &diffuse,
                     const double &specular,
                     const double &shininess,
-                    const double &reflective) {
-    setColor(c);
-    setAmbient(ambient);
-    setDiffuse(diffuse);
-    setSpecular(specular);
-    setShininess(shininess);
-    setReflective(reflective);
-}
-
-material::material(const color &c, 
-                    const double &ambient, 
-                    const double &diffuse,
-                    const double &specular,
-                    const double &shininess,
                     const double &reflective,
-                    const std::shared_ptr<pattern> p) {
-    setColor(c);
-    setAmbient(ambient);
-    setDiffuse(diffuse);
-    setSpecular(specular);
-    setShininess(shininess);
-    setReflective(reflective);
+                    const double &transparency,
+                    const double &refractiveIndex,
+                    const std::shared_ptr<pattern> &p):
+    c(c),
+    ambient(ambient),
+    diffuse(diffuse),
+    specular(specular),
+    shininess(shininess),
+    reflective(reflective),
+    transparency(transparency),
+    refractiveIndex(refractiveIndex) {
     setPattern(p);
 }
             
@@ -63,6 +62,14 @@ const double &material::getShininess() const {
 
 const double &material::getReflective() const {
     return reflective;
+}
+
+const double &material::getTransparency() const {
+    return transparency;
+}
+
+const double &material::getRefractiveIndex() const {
+    return refractiveIndex;
 }
 
 const pattern &material::getPattern() const {
@@ -108,7 +115,21 @@ void material::setReflective(const double &v) {
     reflective = v;
 }
 
-void material::setPattern(const std::shared_ptr<pattern> newPattern) {
+void material::setTransparency(const double &v) {
+    if(v < 0) {
+        throw std::invalid_argument("Cannot set transparency value < 0!");
+    }
+    shininess = v;
+}
+
+void material::setRefractiveIndex(const double &v) {
+    if(v < 0) {
+        throw std::invalid_argument("Cannot set refractive index value < 0!");
+    }
+    refractiveIndex = v;
+}
+
+void material::setPattern(const std::shared_ptr<pattern> &newPattern) {
     p = newPattern;
 }
 
