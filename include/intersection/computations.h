@@ -9,7 +9,7 @@ namespace rayTracer {
 
     class computations {
         private:
-            double t;
+            float t;
             std::shared_ptr<const shape> object;
             tuple point;
             tuple overPoint;
@@ -18,15 +18,15 @@ namespace rayTracer {
             tuple normalV;
             tuple reflectV;
             bool inside;
-            double exitRefractiveIndex;
-            double enterRefractiveIndex;
+            float exitRefractiveIndex;
+            float enterRefractiveIndex;
         public:
             computations(const intersection &i, const ray &r);
             computations(const intersection &i, const ray &r, const std::vector<intersection> &currentIntersections);
 
-            double getReflectance() const;
+            float getReflectance() const;
 
-            const double &getT() const;
+            const float &getT() const;
             const shape &getObject() const;
             const tuple &getPoint() const;
             const tuple &getOverPoint() const;
@@ -35,7 +35,7 @@ namespace rayTracer {
             const tuple &getNormalV() const;
             const tuple &getReflectV() const;
             const bool &isInside() const;
-            const double &getExitRefractiveIndex() const;
-            const double &getEnterRefractiveIndex() const;
+            const float &getExitRefractiveIndex() const;
+            const float &getEnterRefractiveIndex() const;
     };
 };

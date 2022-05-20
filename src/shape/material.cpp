@@ -3,13 +3,13 @@
 using namespace rayTracer;
 
 material::material(const color &c, 
-                    const double &ambient, 
-                    const double &diffuse,
-                    const double &specular,
-                    const double &shininess,
-                    const double &reflective,
-                    const double &transparency,
-                    const double &refractiveIndex):
+                    const float &ambient,
+                    const float &diffuse,
+                    const float &specular,
+                    const float &shininess,
+                    const float &reflective,
+                    const float &transparency,
+                    const float &refractiveIndex):
     c(c),
     ambient(ambient),
     diffuse(diffuse),
@@ -21,13 +21,13 @@ material::material(const color &c,
     {}
 
 material::material(const color &c, 
-                    const double &ambient, 
-                    const double &diffuse,
-                    const double &specular,
-                    const double &shininess,
-                    const double &reflective,
-                    const double &transparency,
-                    const double &refractiveIndex,
+                    const float &ambient,
+                    const float &diffuse,
+                    const float &specular,
+                    const float &shininess,
+                    const float &reflective,
+                    const float &transparency,
+                    const float &refractiveIndex,
                     const std::shared_ptr<pattern> &p):
     c(c),
     ambient(ambient),
@@ -44,31 +44,31 @@ const color &material::getColor() const {
     return c;
 }
 
-const double &material::getAmbient() const {
+const float &material::getAmbient() const {
     return ambient;
 }
 
-const double &material::getDiffuse() const {
+const float &material::getDiffuse() const {
     return diffuse;
 }
 
-const double &material::getSpecular() const {
+const float &material::getSpecular() const {
     return specular;
 }
 
-const double &material::getShininess() const {
+const float &material::getShininess() const {
     return shininess;
 }
 
-const double &material::getReflective() const {
+const float &material::getReflective() const {
     return reflective;
 }
 
-const double &material::getTransparency() const {
+const float &material::getTransparency() const {
     return transparency;
 }
 
-const double &material::getRefractiveIndex() const {
+const float &material::getRefractiveIndex() const {
     return refractiveIndex;
 }
 
@@ -80,49 +80,49 @@ void material::setColor(const color &newColor) {
     c = newColor;
 }
 
-void material::setAmbient(const double &v) {
+void material::setAmbient(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set ambient value < 0!");
     }
     ambient = v;
 }
 
-void material::setDiffuse(const double &v) {
+void material::setDiffuse(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set diffuse value < 0!");
     }
     diffuse = v;
 }
 
-void material::setSpecular(const double &v) {
+void material::setSpecular(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set specular value < 0!");
     }
     specular = v;
 }
 
-void material::setShininess(const double &v) {
+void material::setShininess(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set shininess value < 0!");
     }
     shininess = v;
 }
 
-void material::setReflective(const double &v) {
+void material::setReflective(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set reflective value < 0!");
     }
     reflective = v;
 }
 
-void material::setTransparency(const double &v) {
+void material::setTransparency(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set transparency value < 0!");
     }
     shininess = v;
 }
 
-void material::setRefractiveIndex(const double &v) {
+void material::setRefractiveIndex(const float &v) {
     if(v < 0) {
         throw std::invalid_argument("Cannot set refractive index value < 0!");
     }

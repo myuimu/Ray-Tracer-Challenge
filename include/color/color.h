@@ -8,18 +8,18 @@ namespace rayTracer {
         private:
             tuple colorTuple;
         public:
-            color(const double &red, const double &green, const double &blue);
+            color(const float &red, const float &green, const float &blue);
             color(const tuple &colorTuple);
             color();
 
-            double getRed() const;
-            double getGreen() const;
-            double getBlue() const;
+            float getRed() const;
+            float getGreen() const;
+            float getBlue() const;
             std::string toString() const;
 
             color operator+(const color &rhs) const;
             color operator-(const color &rhs) const;
-            color operator*(const double &rhs) const;
+            color operator*(const float &rhs) const;
             color operator*(const color &rhs) const;
 
             bool operator==(const color &rhs) const;

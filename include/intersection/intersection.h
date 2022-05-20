@@ -8,12 +8,12 @@ namespace rayTracer {
 
     class intersection {
         private:
-            double t;
+            float t;
             std::shared_ptr<const shape> object;
         public:
-            intersection(const double &t, const std::shared_ptr<const shape> &object);
+            intersection(const float &t, const std::shared_ptr<const shape> &object);
 
-            const double &getT() const;
+            const float &getT() const;
             const shape &getObject() const;
             const std::shared_ptr<const shape> &getObjectPtr() const;
 

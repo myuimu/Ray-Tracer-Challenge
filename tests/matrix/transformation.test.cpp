@@ -64,8 +64,8 @@ BOOST_AUTO_TEST_CASE(reflectPoint) {
 
 BOOST_AUTO_TEST_CASE(xRotationMatrix) {
     auto p = point(0, 1, 0);
-    auto halfQuarter = xRotation(M_PI / 4);
-    auto fullQuarter = xRotation(M_PI_2);
+    auto halfQuarter = xRotation(M_PIf / 4);
+    auto fullQuarter = xRotation(M_PI_2f);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(0, M_SQRT2 / 2, M_SQRT2 / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(0, 0, 1));
@@ -73,15 +73,15 @@ BOOST_AUTO_TEST_CASE(xRotationMatrix) {
 
 BOOST_AUTO_TEST_CASE(xRotationInverse) {
     auto p = point(0, 1, 0);
-    auto inverseHalfQuarter = xRotation(M_PI / 4).getInverse();
+    auto inverseHalfQuarter = xRotation(M_PIf / 4).getInverse();
 
     BOOST_CHECK_EQUAL(inverseHalfQuarter * p, point(0, M_SQRT2 / 2, -(M_SQRT2 / 2)));
 }
 
 BOOST_AUTO_TEST_CASE(yRotationMatrix) {
     auto p = point(0, 0, 1);
-    auto halfQuarter = yRotation(M_PI / 4);
-    auto fullQuarter = yRotation(M_PI_2);
+    auto halfQuarter = yRotation(M_PIf / 4);
+    auto fullQuarter = yRotation(M_PI_2f);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(M_SQRT2 / 2, 0, M_SQRT2 / 2));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(1, 0, 0));
@@ -89,8 +89,8 @@ BOOST_AUTO_TEST_CASE(yRotationMatrix) {
 
 BOOST_AUTO_TEST_CASE(zRotationMatrix) {
     auto p = point(0, 1, 0);
-    auto halfQuarter = zRotation(M_PI / 4);
-    auto fullQuarter = zRotation(M_PI_2);
+    auto halfQuarter = zRotation(M_PIf / 4);
+    auto fullQuarter = zRotation(M_PI_2f);
 
     BOOST_CHECK_EQUAL(halfQuarter * p, point(-(M_SQRT2 / 2), M_SQRT2 / 2, 0));
     BOOST_CHECK_EQUAL(fullQuarter * p, point(-1, 0, 0));
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(shearingZInProportionToY) {
 
 BOOST_AUTO_TEST_CASE(applyingTransformationsInSequence) {
     auto p1 = point(1, 0, 1);
-    auto transform1 = xRotation(M_PI_2);
+    auto transform1 = xRotation(M_PI_2f);
     auto transform2 = scaling(5, 5, 5);
     auto transform3 = translation(10, 5, 7);
 
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(applyingTransformationsInSequence) {
 
 BOOST_AUTO_TEST_CASE(chainedTransformationsInReverseOrder) {
     auto p = point(1, 0, 1);
-    auto transform1 = xRotation(M_PI_2);
+    auto transform1 = xRotation(M_PI_2f);
     auto transform2 = scaling(5, 5, 5);
     auto transform3 = translation(10, 5, 7);
 
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE(chainedTransformationsInReverseOrder) {
 
 BOOST_AUTO_TEST_CASE(chainedTransformationsFromIdentity) {
     auto p = point(1, 0, 1);
-    auto transform = IDENTITY_MATRIX.rotateX(M_PI_2)
+    auto transform = IDENTITY_MATRIX.rotateX(M_PI_2f)
         .scale(5, 5, 5)
         .translate(10, 5, 7);
 
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE(arbitraryView) {
 
     auto t = viewTransform(from, to, up);
 
-    BOOST_CHECK_EQUAL(t, matrix(std::vector<std::vector<double>>({
+    BOOST_CHECK_EQUAL(t, matrix(std::vector<std::vector<float>>({
         {-0.50709, 0.50709, 0.67612, -2.36643},
         {0.76772, 0.60609, 0.12122, -2.82843},
         {-0.35857, 0.59761, -0.71714, 0},

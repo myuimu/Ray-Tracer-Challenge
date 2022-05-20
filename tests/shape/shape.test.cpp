@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(translatedNormal) {
 BOOST_AUTO_TEST_CASE(scaledRotatedNormal) {
     auto s = testShape();
 
-    s.setTransform(zRotation(M_PI / 5).scale(1, 0.5, 1));
+    s.setTransform(zRotation(M_PIf / 5).scale(1, 0.5, 1));
     auto n = s.getNormal(point(0, M_SQRT2 / 2, -M_SQRT2 / 2));
 
     BOOST_CHECK_EQUAL(n, vector(0, 0.97014, -0.24254));

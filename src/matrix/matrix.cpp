@@ -7,10 +7,10 @@
 using namespace rayTracer;
 
 matrix::matrix(const int &width, const int &height):
-    values{std::vector<std::vector<double>>(height, std::vector<double>(width, 0))}
+    values{std::vector<std::vector<float>>(height, std::vector<float>(width, 0))}
     {}
 
-matrix::matrix(const std::vector<std::vector<double>> &values):
+matrix::matrix(const std::vector<std::vector<float>> &values):
     values{values}
     {}
 
@@ -30,10 +30,10 @@ int matrix::getHeight() const {
 }
 
 matrix matrix::getTranspose() const {
-    std::vector<std::vector<double>> newValues;
+    std::vector<std::vector<float>> newValues;
 
     for (int i = 0; i < getHeight(); i++) {
-        newValues.push_back(std::vector<double>());
+        newValues.push_back(std::vector<float>());
         for (int j = 0; j < getWidth(); j++) {
             newValues[i].push_back(values[j][i]);
         }
@@ -42,8 +42,8 @@ matrix matrix::getTranspose() const {
     return matrix(newValues);
 }
 
-double matrix::getDeterminant() const {
-    double det = 0;
+float matrix::getDeterminant() const {
+    float det = 0;
 
     auto width = getWidth();
     auto height = getHeight();
@@ -71,11 +71,11 @@ matrix matrix::getSubmatrix(const int &row, const int &col) const {
     return matrix(newValues);
 }
 
-double matrix::getMinor(const int &row, const int &col) const {
+float matrix::getMinor(const int &row, const int &col) const {
     return getSubmatrix(row, col).getDeterminant();
 }
 
-double matrix::getCofactor(const int &row, const int &col) const {
+float matrix::getCofactor(const int &row, const int &col) const {
     auto minor = getMinor(row, col);
 
     if ((row + col) % 2 != 0) {
@@ -93,7 +93,7 @@ matrix matrix::getInverse() const {
     auto height = getHeight();
     auto det = getDeterminant();
 
-    auto newValues = std::vector<std::vector<double>>(height, std::vector<double>(width, 0));
+    auto newValues = std::vector<std::vector<float>>(height, std::vector<float>(width, 0));
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -104,36 +104,36 @@ matrix matrix::getInverse() const {
     return matrix(newValues);
 }
 
-matrix matrix::translate(const double &x, const double &y, const double &z) const {
+matrix matrix::translate(const float &x, const float &y, const float &z) const {
     return rayTracer::translation(x, y, z) * *this;
 }
 
-matrix matrix::scale(const double &x, const double &y, const double &z) const {
+matrix matrix::scale(const float &x, const float &y, const float &z) const {
     return rayTracer::scaling(x, y ,z) * *this;
 }
 
-matrix matrix::rotateX(const double &r) const {
+matrix matrix::rotateX(const float &r) const {
     return rayTracer::xRotation(r) * *this;
 }
 
-matrix matrix::rotateY(const double &r) const {
+matrix matrix::rotateY(const float &r) const {
     return rayTracer::yRotation(r) * *this;
 }
 
-matrix matrix::rotateZ(const double &r) const {
+matrix matrix::rotateZ(const float &r) const {
     return zRotation(r) * *this;
 }
 
-matrix matrix::shear(const double &xY, const double &xZ, const double &yX, const double &yZ, const double &zX, const double &zY) const {
+matrix matrix::shear(const float &xY, const float &xZ, const float &yX, const float &yZ, const float &zX, const float &zY) const {
     return shearing(xY, xZ, yX, yZ, zX, zY) * *this;
 }
 
-const std::vector<double> &matrix::operator[](const int &index) const {
+const std::vector<float> &matrix::operator[](const int &index) const {
     return values.at(index);
 }
 
 matrix matrix::operator*(const matrix &rhs) const {
-    std::vector<std::vector<double>> newValues;
+    std::vector<std::vector<float>> newValues;
 
     auto width = getWidth();
     auto height = rhs.getHeight();
@@ -147,9 +147,9 @@ matrix matrix::operator*(const matrix &rhs) const {
     }
 
     for (int i = 0; i < height; i++) {
-        newValues.push_back(std::vector<double>());
+        newValues.push_back(std::vector<float>());
         for (int j = 0; j < width; j++) {
-            double sum = 0;
+            float sum = 0;
             for (int k = 0; k < width; k++) {
                 sum += values[i][k] * rhs.values[k][j];
             }
@@ -199,7 +199,7 @@ std::ostream& rayTracer::operator<<(std::ostream &os, const matrix &m) {
 }
 
 matrix rayTracer::getIdentityMatrix() {
-    auto values = std::vector<std::vector<double>>({
+    auto values = std::vector<std::vector<float>>({
         {1, 0, 0, 0},
         {0, 1, 0, 0},
         {0, 0, 1, 0},

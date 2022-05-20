@@ -2,7 +2,7 @@
 
 using namespace rayTracer;
 
-camera::camera(const int &hSize, const int &vSize, const double &fov, const matrix &transform):
+camera::camera(const int &hSize, const int &vSize, const float &fov, const matrix &transform):
     hSize{hSize},
     vSize{vSize},
     fov{fov},
@@ -11,7 +11,7 @@ camera::camera(const int &hSize, const int &vSize, const double &fov, const matr
         calculatePixelSize();
     }
 
-camera::camera(const int &hSize, const int &vSize, const double &fov):
+camera::camera(const int &hSize, const int &vSize, const float &fov):
     hSize{hSize},
     vSize{vSize},
     fov{fov},
@@ -22,7 +22,7 @@ camera::camera(const int &hSize, const int &vSize, const double &fov):
 
 void camera::calculatePixelSize() {
     auto halfView = tan(fov / 2);
-    auto aspect = (double) hSize / (double) vSize;
+    auto aspect = (float) hSize / (float) vSize;
 
     if (aspect >= 1) {
         halfWidth = halfView;
@@ -43,7 +43,7 @@ const int &camera::getVSize() const {
     return vSize;
 }
 
-const double &camera::getFov() const {
+const float &camera::getFov() const {
     return fov;
 }
 
@@ -51,7 +51,7 @@ const matrix &camera::getTransform() const {
     return transform;
 }
 
-const double &camera::getPixelSize() const {
+const float &camera::getPixelSize() const {
     return pixelSize;
 }
 

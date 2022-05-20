@@ -1,5 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include "matrix/matrix.h"
+#include "ray_tracer.h"
 
 using namespace rayTracer;
 
@@ -8,7 +9,7 @@ BOOST_AUTO_TEST_SUITE(matrixTest)
 /*-----CONSTRUCTOR TESTS-----*/
 
 BOOST_AUTO_TEST_CASE(construct4x4Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {5.5, 6.5, 7.5, 8.5},
         {9, 10, 11, 12},
@@ -25,7 +26,7 @@ BOOST_AUTO_TEST_CASE(construct4x4Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(construct2x2Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-3, 5},
         {1, -2}
     }));
@@ -37,7 +38,7 @@ BOOST_AUTO_TEST_CASE(construct2x2Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(construct3x3Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-3, 5, 0},
         {1, -2, -7},
         {0, 1, 1}
@@ -51,13 +52,13 @@ BOOST_AUTO_TEST_CASE(construct3x3Matrix) {
 /*-----OPERATOR TESTS-----*/
 
 BOOST_AUTO_TEST_CASE(compareIdenticalMatrices) {
-    auto m1 = matrix(std::vector<std::vector<double>>({
+    auto m1 = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {5, 6, 7, 8},
         {9, 10, 11, 12},
         {13, 14, 15, 16}
     }));
-    auto m2 = matrix(std::vector<std::vector<double>>({
+    auto m2 = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {5, 6, 7, 8},
         {9, 10, 11, 12},
@@ -68,13 +69,13 @@ BOOST_AUTO_TEST_CASE(compareIdenticalMatrices) {
 }
 
 BOOST_AUTO_TEST_CASE(compareDifferentMatrices) {
-    auto m1 = matrix(std::vector<std::vector<double>>({
+    auto m1 = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {5, 6, 7, 8},
         {9, 8, 7, 6},
         {5, 4, 3, 2}
     }));
-    auto m2 = matrix(std::vector<std::vector<double>>({
+    auto m2 = matrix(std::vector<std::vector<float>>({
         {2, 3, 4, 5},
         {6, 7, 8, 9},
         {8, 7, 6, 5},
@@ -85,20 +86,20 @@ BOOST_AUTO_TEST_CASE(compareDifferentMatrices) {
 }
 
 BOOST_AUTO_TEST_CASE(multiplyMatrices) {
-    auto m1 = matrix(std::vector<std::vector<double>>({
+    auto m1 = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {5, 6, 7, 8},
         {9, 8, 7, 6},
         {5, 4, 3, 2}
     }));
-    auto m2 = matrix(std::vector<std::vector<double>>({
+    auto m2 = matrix(std::vector<std::vector<float>>({
         {-2, 1, 2, 3},
         {3, 2, 1, -1},
         {4, 3, 6, 5},
         {1, 2, 7, 8}
     }));
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {20, 22, 50, 48},
         {44, 54, 114, 108},
         {40, 58, 110, 102},
@@ -109,7 +110,7 @@ BOOST_AUTO_TEST_CASE(multiplyMatrices) {
 }
 
 BOOST_AUTO_TEST_CASE(multiplyMatrixAndTuple) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {1, 2, 3, 4},
         {2, 4, 4, 2},
         {8, 6, 4, 1},
@@ -123,7 +124,7 @@ BOOST_AUTO_TEST_CASE(multiplyMatrixAndTuple) {
 }
 
 BOOST_AUTO_TEST_CASE(identityMultiply) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {0, 1, 2, 4},
         {1, 2, 4, 8},
         {2, 4, 8, 16},
@@ -134,14 +135,14 @@ BOOST_AUTO_TEST_CASE(identityMultiply) {
 }
 
 BOOST_AUTO_TEST_CASE(transposeMatrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {0, 9, 3, 0},
         {9, 8, 0, 8},
         {1, 8, 5, 3},
         {0, 0, 5, 8}
     }));
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {0, 9, 1, 0},
         {9, 8, 8, 0},
         {3, 0, 5, 5},
@@ -156,7 +157,7 @@ BOOST_AUTO_TEST_CASE(transposeIdentityMatrix) {
 }
 
 BOOST_AUTO_TEST_CASE(determinantOf2x2Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {1, 5},
         {-3, 2}
     }));
@@ -165,13 +166,13 @@ BOOST_AUTO_TEST_CASE(determinantOf2x2Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(subMatrixOf3x3Is2x2) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {1, 5, 0},
         {-3, 2, 7},
         {0, 6, -3}
     }));
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {-3, 2},
         {0, 6}
     }));
@@ -180,14 +181,14 @@ BOOST_AUTO_TEST_CASE(subMatrixOf3x3Is2x2) {
 }
 
 BOOST_AUTO_TEST_CASE(subMatrixOf4x4Is3x3) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-6, 1, 1, 6},
         {-8, 5, 8, 6},
         {-1, 0, 8, 2},
         {-7, 1, -1, 1}
     }));
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {-6, 1, 6},
         {-8, 8, 6},
         {-7, -1, 1}
@@ -197,7 +198,7 @@ BOOST_AUTO_TEST_CASE(subMatrixOf4x4Is3x3) {
 }
 
 BOOST_AUTO_TEST_CASE(minorOf3x3Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {3, 5, 0},
         {2, -1, -7},
         {6, -1, 5}
@@ -209,7 +210,7 @@ BOOST_AUTO_TEST_CASE(minorOf3x3Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(cofactorOf3x3Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {3, 5, 0},
         {2, -1, -7},
         {6, -1, 5}
@@ -222,7 +223,7 @@ BOOST_AUTO_TEST_CASE(cofactorOf3x3Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(determinantOf3x3Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {1, 2, 6},
         {-5, 8, -4},
         {2, 6, 4}
@@ -235,7 +236,7 @@ BOOST_AUTO_TEST_CASE(determinantOf3x3Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(determinantOf4x4Matrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-2, -8, 3, 5},
         {-3, 1, 7, 3},
         {1, 2, -9, 6},
@@ -250,7 +251,7 @@ BOOST_AUTO_TEST_CASE(determinantOf4x4Matrix) {
 }
 
 BOOST_AUTO_TEST_CASE(matrixIsInvertable) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {6, 4, 4, 4},
         {5, 5, 7, 6},
         {4, -9, 3, -7},
@@ -262,7 +263,7 @@ BOOST_AUTO_TEST_CASE(matrixIsInvertable) {
 }
 
 BOOST_AUTO_TEST_CASE(matrixIsNotInvertable) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-4, 2, -2, -3},
         {9, 6, 2, 6},
         {0, -5, 1, -5},
@@ -274,7 +275,7 @@ BOOST_AUTO_TEST_CASE(matrixIsNotInvertable) {
 }
 
 BOOST_AUTO_TEST_CASE(inverseOfMatrix) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {-5, 2, 6, -8},
         {1, -5, 1, 8},
         {7, 7, -6, -7},
@@ -282,7 +283,7 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix) {
     }));
     auto i = m.getInverse();
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {0.21805, 0.45113, 0.24060, -0.04511},
         {-0.80827, -1.45677, -0.44361, 0.52068},
         {-0.07895, -0.22368, -0.05263, 0.19737},
@@ -291,14 +292,14 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix) {
 
     BOOST_CHECK_EQUAL(m.getDeterminant(), 532);
     BOOST_CHECK_EQUAL(m.getCofactor(2, 3), -160);
-    BOOST_CHECK_EQUAL(i[3][2], -160.0/532.0);
+    BOOST_CHECK(equalWithError(i[3][2], -160.0/532.0));
     BOOST_CHECK_EQUAL(m.getCofactor(3, 2), 105);
-    BOOST_CHECK_EQUAL(i[2][3], 105.0/532.0);
+    BOOST_CHECK(equalWithError(i[2][3], 105.0/532.0));
     BOOST_CHECK_EQUAL(i, expected);
 }
 
 BOOST_AUTO_TEST_CASE(inverseOfMatrix2) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {8, -5, 9, 2},
         {7, 5, 6, 1},
         {-6, 0, 9, 6},
@@ -306,7 +307,7 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix2) {
     }));
     auto i = m.getInverse();
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {-0.15385, -0.15385, -0.28205, -0.53846},
         {-0.07692, 0.12308, 0.02564, 0.03077},
         {0.35897, 0.35897, 0.43590, 0.92308},
@@ -317,7 +318,7 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix2) {
 }
 
 BOOST_AUTO_TEST_CASE(inverseOfMatrix3) {
-    auto m = matrix(std::vector<std::vector<double>>({
+    auto m = matrix(std::vector<std::vector<float>>({
         {9, 3, 0, 9},
         {-5, -2, -6, -3},
         {-4, 9, 6, 4},
@@ -325,7 +326,7 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix3) {
     }));
     auto i = m.getInverse();
 
-    auto expected = matrix(std::vector<std::vector<double>>({
+    auto expected = matrix(std::vector<std::vector<float>>({
         {-0.04074, -0.07778, 0.14444, -0.22222},
         {-0.07778, 0.03333, 0.36667, -0.33333},
         {-0.02901, -0.14630, -0.10926, 0.12963},
@@ -336,13 +337,13 @@ BOOST_AUTO_TEST_CASE(inverseOfMatrix3) {
 }
 
 BOOST_AUTO_TEST_CASE(multiplyingInverseGetsOriginal) {
-    auto m1 = matrix(std::vector<std::vector<double>>({
+    auto m1 = matrix(std::vector<std::vector<float>>({
         {3, -9, 7, 3},
         {3, -8, 2, -9},
         {-4, 4, 4, 1},
         {-6, 5, -1, 1}
     }));
-    auto m2 = matrix(std::vector<std::vector<double>>({
+    auto m2 = matrix(std::vector<std::vector<float>>({
         {8, 2, 2, 2},
         {3, -1, 7, 0},
         {7, 0, 5, 4},

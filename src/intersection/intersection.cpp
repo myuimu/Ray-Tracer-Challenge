@@ -3,12 +3,12 @@
 
 using namespace rayTracer;
 
-intersection::intersection(const double &t, const std::shared_ptr<const shape> &object):
+intersection::intersection(const float &t, const std::shared_ptr<const shape> &object):
     t{t},
     object{object}
     {}
 
-const double &intersection::getT() const {
+const float &intersection::getT() const {
     return t;
 }
 

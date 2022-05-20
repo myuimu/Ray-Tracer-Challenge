@@ -15,7 +15,7 @@ const tuple &ray::getDirection() const {
     return direction;
 }
 
-tuple ray::getPosition(const double &t) const {
+tuple ray::getPosition(const float &t) const {
     return origin + (direction * t);
 }
 

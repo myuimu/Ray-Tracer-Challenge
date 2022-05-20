@@ -6,7 +6,7 @@
 
 using namespace rayTracer;
 
-color::color(const double &red, const double &green, const double &blue):
+color::color(const float &red, const float &green, const float &blue):
     colorTuple{vector(red, green, blue)}
     {}
 
@@ -18,22 +18,22 @@ color::color():
     colorTuple(tuple())
     {}
 
-double color::getRed() const {
+float color::getRed() const {
     return colorTuple.getX();
 }
 
-double color::getGreen() const {
+float color::getGreen() const {
     return colorTuple.getY();
 }
 
-double color::getBlue() const {
+float color::getBlue() const {
     return colorTuple.getZ();
 }
 
 std::string color::toString() const {
-    auto red = std::to_string((int) round(std::clamp(getRed() * 255, 0.0, 255.0)));
-    auto green = std::to_string((int) round(std::clamp(getGreen() * 255, 0.0, 255.0)));
-    auto blue = std::to_string((int) round(std::clamp(getBlue() * 255, 0.0, 255.0)));
+    auto red = std::to_string((int) round(std::clamp(getRed() * 255, 0.0f, 255.0f)));
+    auto green = std::to_string((int) round(std::clamp(getGreen() * 255, 0.0f, 255.0f)));
+    auto blue = std::to_string((int) round(std::clamp(getBlue() * 255, 0.0f, 255.0f)));
 
     return red + " " + green + " " + blue;
 }
@@ -46,7 +46,7 @@ color color::operator-(const color &rhs) const {
     return color(colorTuple - rhs.colorTuple);
 }
 
-color color::operator*(const double &rhs) const {
+color color::operator*(const float &rhs) const {
     return color(colorTuple * rhs);
 }
 

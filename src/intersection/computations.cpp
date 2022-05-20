@@ -51,7 +51,7 @@ computations::computations(const intersection &i, const ray &r, const std::vecto
     }
 }
 
-double computations::getReflectance() const {
+float computations::getReflectance() const {
     auto cos = eyeV.dot(normalV);
 
     if (exitRefractiveIndex > enterRefractiveIndex) {
@@ -70,7 +70,7 @@ double computations::getReflectance() const {
     return r0 + (1 - r0) * pow(1 - cos, 5);
 }
 
-const double &computations::getT() const {
+const float &computations::getT() const {
     return t;
 }
 
@@ -106,10 +106,10 @@ const bool &computations::isInside() const {
     return inside;
 }
 
-const double &computations::getExitRefractiveIndex() const {
+const float &computations::getExitRefractiveIndex() const {
     return exitRefractiveIndex;
 }
 
-const double &computations::getEnterRefractiveIndex() const {
+const float &computations::getEnterRefractiveIndex() const {
     return enterRefractiveIndex;
 }

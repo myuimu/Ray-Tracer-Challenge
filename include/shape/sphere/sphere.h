@@ -6,7 +6,7 @@ namespace rayTracer {
     class sphere: public shape {
         private:
             tuple origin;
-            double radius;
+            float radius;
         public:
             sphere();
             sphere(const matrix &transform, const material &m);

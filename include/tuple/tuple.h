@@ -5,18 +5,18 @@
 namespace rayTracer {
     class tuple {
         private:
-            double x;
-            double y;
-            double z;
-            double w;
+            float x;
+            float y;
+            float z;
+            float w;
         public:
-            tuple(const double &x, const double &y, const double &z, const double &w);
+            tuple(const float &x, const float &y, const float &z, const float &w);
             tuple();
 
-            const double &getX() const;
-            const double &getY() const;
-            const double &getZ() const;
-            const double &getW() const;
+            const float &getX() const;
+            const float &getY() const;
+            const float &getZ() const;
+            const float &getW() const;
 
             bool isPoint() const;
             bool isVector() const;
@@ -24,18 +24,18 @@ namespace rayTracer {
             tuple toPoint() const;
             tuple toVector() const;
 
-            double getMagnitude() const;
+            float getMagnitude() const;
             tuple normalized() const;
 
-            double dot(const tuple &rhs) const;
+            float dot(const tuple &rhs) const;
             tuple cross(const tuple &rhs) const;
             tuple reflect(const tuple &rhs) const;
 
             tuple operator+(const tuple &rhs) const;
             tuple operator-(const tuple &rhs) const;
             tuple operator-() const;
-            tuple operator*(const double &rhs) const;
-            tuple operator/(const double &rhs) const;
+            tuple operator*(const float &rhs) const;
+            tuple operator/(const float &rhs) const;
 
             bool operator==(const tuple &rhs) const;
 
@@ -43,8 +43,8 @@ namespace rayTracer {
     };
     std::ostream& operator<<(std::ostream &os, const tuple &t);
 
-    tuple point(const double &x, const double &y, const double &z);
+    tuple point(const float &x, const float &y, const float &z);
     tuple point();
-    tuple vector(const double &x, const double &y, const double &z);
+    tuple vector(const float &x, const float &y, const float &z);
     tuple vector();
 };

@@ -4,8 +4,8 @@
 
 using namespace rayTracer;
 
-matrix rayTracer::translation(const double &x, const double &y, const double &z) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::translation(const float &x, const float &y, const float &z) {
+    auto values = std::vector<std::vector<float>>({
         {1, 0, 0, x},
         {0, 1, 0, y},
         {0, 0, 1, z},
@@ -14,8 +14,8 @@ matrix rayTracer::translation(const double &x, const double &y, const double &z)
     return matrix(values);
 }
 
-matrix rayTracer::scaling(const double &x, const double &y, const double &z) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::scaling(const float &x, const float &y, const float &z) {
+    auto values = std::vector<std::vector<float>>({
         {x, 0, 0, 0},
         {0, y, 0, 0},
         {0, 0, z, 0},
@@ -24,8 +24,8 @@ matrix rayTracer::scaling(const double &x, const double &y, const double &z) {
     return matrix(values);
 }
 
-matrix rayTracer::xRotation(const double &r) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::xRotation(const float &r) {
+    auto values = std::vector<std::vector<float>>({
         {1, 0, 0, 0},
         {0, cos(r), -sin(r), 0},
         {0, sin(r), cos(r), 0},
@@ -34,8 +34,8 @@ matrix rayTracer::xRotation(const double &r) {
     return matrix(values);
 }
 
-matrix rayTracer::yRotation(const double &r) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::yRotation(const float &r) {
+    auto values = std::vector<std::vector<float>>({
         {cos(r), 0, sin(r), 0},
         {0, 1, 0, 0},
         {-sin(r), 0, cos(r), 0},
@@ -44,8 +44,8 @@ matrix rayTracer::yRotation(const double &r) {
     return matrix(values);
 }
 
-matrix rayTracer::zRotation(const double &r) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::zRotation(const float &r) {
+    auto values = std::vector<std::vector<float>>({
         {cos(r), -sin(r), 0, 0},
         {sin(r), cos(r), 0, 0},
         {0, 0, 1, 0},
@@ -54,8 +54,8 @@ matrix rayTracer::zRotation(const double &r) {
     return matrix(values);
 }
 
-matrix rayTracer::shearing(const double &xY, const double &xZ, const double &yX, const double &yZ, const double &zX, const double &zY) {
-    auto values = std::vector<std::vector<double>>({
+matrix rayTracer::shearing(const float &xY, const float &xZ, const float &yX, const float &yZ, const float &zX, const float &zY) {
+    auto values = std::vector<std::vector<float>>({
         {1, xY, xZ, 0},
         {yX, 1, yZ, 0},
         {zX, zY, 1, 0},
@@ -70,7 +70,7 @@ matrix rayTracer::viewTransform(const tuple &from, const tuple &to, const tuple 
     auto left = forward.cross(upn);
     auto trueUp = left.cross(forward);
 
-    auto orientation = matrix(std::vector<std::vector<double>>({
+    auto orientation = matrix(std::vector<std::vector<float>>({
         {left.getX(), left.getY(), left.getZ(), 0},
         {trueUp.getX(), trueUp.getY(), trueUp.getZ(), 0},
         {-forward.getX(), -forward.getY(), -forward.getZ(), 0},

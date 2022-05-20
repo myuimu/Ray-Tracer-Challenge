@@ -10,50 +10,50 @@ namespace rayTracer {
         private:
             color c;
             std::shared_ptr<pattern> p;
-            double ambient;
-            double diffuse;
-            double specular;
-            double shininess;
-            double reflective;
-            double transparency;
-            double refractiveIndex;
+            float ambient;
+            float diffuse;
+            float specular;
+            float shininess;
+            float reflective;
+            float transparency;
+            float refractiveIndex;
         public:
             explicit material(const color &c = color(1, 1, 1),
-                    const double &ambient = 0.1,
-                    const double &diffuse = 0.9,
-                    const double &specular = 0.9,
-                    const double &shininess = 200.0,
-                    const double &reflective = 0.0,
-                    const double &transparency = 0.0,
-                    const double &refractiveIndex = 1.0);
+                    const float &ambient = 0.1,
+                    const float &diffuse = 0.9,
+                    const float &specular = 0.9,
+                    const float &shininess = 200.0,
+                    const float &reflective = 0.0,
+                    const float &transparency = 0.0,
+                    const float &refractiveIndex = 1.0);
             material(const color &c, 
-                    const double &ambient, 
-                    const double &diffuse,
-                    const double &specular,
-                    const double &shininess,
-                    const double &reflective,
-                    const double &transparency,
-                    const double &refractiveIndex,
+                    const float &ambient,
+                    const float &diffuse,
+                    const float &specular,
+                    const float &shininess,
+                    const float &reflective,
+                    const float &transparency,
+                    const float &refractiveIndex,
                     const std::shared_ptr<pattern> &p);
             
             const color &getColor() const;
-            const double &getAmbient() const;
-            const double &getDiffuse() const;
-            const double &getSpecular() const;
-            const double &getShininess() const;
-            const double &getReflective() const;
-            const double &getTransparency() const;
-            const double &getRefractiveIndex() const;
+            const float &getAmbient() const;
+            const float &getDiffuse() const;
+            const float &getSpecular() const;
+            const float &getShininess() const;
+            const float &getReflective() const;
+            const float &getTransparency() const;
+            const float &getRefractiveIndex() const;
             const pattern &getPattern() const;
 
             void setColor(const color &newColor);
-            void setAmbient(const double &v);
-            void setDiffuse(const double &v);
-            void setSpecular(const double &v);
-            void setShininess(const double &v);
-            void setReflective(const double &v);
-            void setTransparency(const double &v);
-            void setRefractiveIndex(const double &v);
+            void setAmbient(const float &v);
+            void setDiffuse(const float &v);
+            void setSpecular(const float &v);
+            void setShininess(const float &v);
+            void setReflective(const float &v);
+            void setTransparency(const float &v);
+            void setRefractiveIndex(const float &v);
             void setPattern(const std::shared_ptr<pattern> &newPattern);
 
             color getLighting(const pointLight &light, const shape &object, const tuple &position, const tuple &eyeV, const tuple &normalV, const bool &inShadow) const;

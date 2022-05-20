@@ -11,10 +11,10 @@ BOOST_AUTO_TEST_CASE(defaultMaterial) {
     auto m = material();
 
     BOOST_CHECK_EQUAL(m.getColor(), color(1, 1, 1));
-    BOOST_CHECK_EQUAL(m.getAmbient(), 0.1);
-    BOOST_CHECK_EQUAL(m.getDiffuse(), 0.9);
-    BOOST_CHECK_EQUAL(m.getSpecular(), 0.9);
-    BOOST_CHECK_EQUAL(m.getShininess(), 200.0);
+    BOOST_CHECK_EQUAL(m.getAmbient(), 0.1f);
+    BOOST_CHECK_EQUAL(m.getDiffuse(), 0.9f);
+    BOOST_CHECK_EQUAL(m.getSpecular(), 0.9f);
+    BOOST_CHECK_EQUAL(m.getShininess(), 200.0f);
 }
 
 BOOST_AUTO_TEST_CASE(lightingTest1) {

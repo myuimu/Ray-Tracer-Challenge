@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(normalOfTranslatedSphere) {
 
 BOOST_AUTO_TEST_CASE(normalOfScaledAndRotatedSphere) {
     auto s = std::make_shared<sphere>(sphere());
-    s->setTransform(zRotation(M_PI / 5).scale(1, 0.5, 1));
+    s->setTransform(zRotation(M_PIf / 5).scale(1, 0.5, 1));
 
     auto n = s->getNormal(point(0, M_SQRT2 / 2, -M_SQRT2 / 2));
 
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE(defaultGlassSphere) {
 }
 
 BOOST_AUTO_TEST_CASE(prepareRefractionCalculations) {
-    std::vector<std::pair<double, double>> expectedValues = {
+    std::vector<std::pair<float, float>> expectedValues = {
         {1.0, 1.5},
         {1.5, 2.0},
         {2.0, 2.5},

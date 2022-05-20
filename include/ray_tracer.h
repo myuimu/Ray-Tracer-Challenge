@@ -24,5 +24,5 @@
 #include "shape/pattern/checker.h"
 
 namespace rayTracer {
-    bool equalWithError(const double &lhs, const double &rhs);
+    bool equalWithError(const float &lhs, const float &rhs);
 }

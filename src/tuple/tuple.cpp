@@ -3,7 +3,7 @@
 
 using namespace rayTracer;
 
-tuple::tuple(const double &x, const double &y, const double &z, const double &w):
+tuple::tuple(const float &x, const float &y, const float &z, const float &w):
     x{x},
     y{y},
     z{z},
@@ -17,19 +17,19 @@ tuple::tuple():
     w{0}
     {}
 
-const double &tuple::getX() const {
+const float &tuple::getX() const {
     return x;
 }
 
-const double &tuple::getY() const {
+const float &tuple::getY() const {
     return y;
 }
 
-const double &tuple::getZ() const {
+const float &tuple::getZ() const {
     return z;
 }
 
-const double &tuple::getW() const {
+const float &tuple::getW() const {
     return w;
 }
 
@@ -49,7 +49,7 @@ tuple tuple::toVector() const {
     return vector(x, y, z);
 }
 
-double tuple::getMagnitude() const {
+float tuple::getMagnitude() const {
     return sqrt(
         pow(x, 2) +
         pow(y, 2) +
@@ -68,7 +68,7 @@ tuple tuple::normalized() const {
     );
 }
 
-double tuple::dot(const tuple &rhs) const {
+float tuple::dot(const tuple &rhs) const {
     return x * rhs.x + 
         y * rhs.y + 
         z * rhs.z + 
@@ -99,11 +99,11 @@ tuple tuple::operator-() const {
     return tuple(-x, -y, -z, -w);
 }
 
-tuple tuple::operator*(const double &rhs) const {
+tuple tuple::operator*(const float &rhs) const {
     return tuple(x * rhs, y * rhs, z * rhs, w * rhs);
 }
 
-tuple tuple::operator/(const double &rhs) const {
+tuple tuple::operator/(const float &rhs) const {
     return tuple(x / rhs, y / rhs, z / rhs, w / rhs);
 }
 
@@ -119,7 +119,7 @@ std::ostream& rayTracer::operator<<(std::ostream &os, const tuple &t) {
     return os;
 }
 
-tuple rayTracer::point(const double &x, const double &y, const double &z) {
+tuple rayTracer::point(const float &x, const float &y, const float &z) {
     return tuple(x,y,z,1.0);
 }
 
@@ -127,7 +127,7 @@ tuple rayTracer::point() {
     return tuple(0,0,0,1);
 }
 
-tuple rayTracer::vector(const double &x, const double &y, const double &z) {
+tuple rayTracer::vector(const float &x, const float &y, const float &z) {
     return tuple(x,y,z,0);
 }
 

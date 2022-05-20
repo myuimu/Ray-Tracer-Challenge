@@ -14,7 +14,7 @@ namespace rayTracer {
             const tuple &getOrigin() const;
             const tuple &getDirection() const;
 
-            tuple getPosition(const double &t) const;
+            tuple getPosition(const float &t) const;
             ray transform(const matrix &m) const;
 
             bool operator==(const ray &rhs) const;

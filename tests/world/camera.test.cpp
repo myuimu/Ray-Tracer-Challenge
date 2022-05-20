@@ -17,28 +17,28 @@ const auto TEST_WORLD = world(
 BOOST_AUTO_TEST_SUITE(transformationTest)
 
 BOOST_AUTO_TEST_CASE(createCamera) {
-    auto c = camera(160, 120, M_PI_2);
+    auto c = camera(160, 120, M_PI_2f);
 
     BOOST_CHECK_EQUAL(c.getHSize(), 160);
     BOOST_CHECK_EQUAL(c.getVSize(), 120);
-    BOOST_CHECK_EQUAL(c.getFov(), M_PI_2);
+    BOOST_CHECK_EQUAL(c.getFov(), M_PI_2f);
     BOOST_CHECK_EQUAL(c.getTransform(), IDENTITY_MATRIX);
 }
 
 BOOST_AUTO_TEST_CASE(horizontalPixelSize) {
-    auto c = camera(200, 125, M_PI_2);
+    auto c = camera(200, 125, M_PI_2f);
 
     BOOST_CHECK_EQUAL(equalWithError(c.getPixelSize(), 0.01), true);
 }
 
 BOOST_AUTO_TEST_CASE(verticalPixelSize) {
-    auto c = camera(125, 200, M_PI_2);
+    auto c = camera(125, 200, M_PI_2f);
 
     BOOST_CHECK_EQUAL(equalWithError(c.getPixelSize(), 0.01), true);
 }
 
 BOOST_AUTO_TEST_CASE(centerRay) {
-    auto c = camera(201, 101, M_PI_2);
+    auto c = camera(201, 101, M_PI_2f);
 
     auto r = c.getRayForPixel(100, 50);
 
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(centerRay) {
 }
 
 BOOST_AUTO_TEST_CASE(cornerRay) {
-    auto c = camera(201, 101, M_PI_2);
+    auto c = camera(201, 101, M_PI_2f);
 
     auto r = c.getRayForPixel(0, 0);
 
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(cornerRay) {
 }
 
 BOOST_AUTO_TEST_CASE(transformedCameraRay) {
-    auto c = camera(201, 101, M_PI_2, translation(0, -2, 5).rotateY(M_PI_4));
+    auto c = camera(201, 101, M_PI_2f, translation(0, -2, 5).rotateY(M_PI_4));
 
     auto r = c.getRayForPixel(100, 50);
 
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(transformedCameraRay) {
 }
 
 BOOST_AUTO_TEST_CASE(renderWorld) {
-    auto c = camera(11, 11, M_PI_2, viewTransform(
+    auto c = camera(11, 11, M_PI_2f, viewTransform(
         point(0, 0, -5),
         point(0, 0, 0),
         vector(0, 1, 0)

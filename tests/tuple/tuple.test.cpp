@@ -1,5 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include "tuple/tuple.h"
+#include "ray_tracer.h"
 
 using namespace rayTracer;
 
@@ -11,9 +12,9 @@ BOOST_AUTO_TEST_SUITE(tupleTest)
 BOOST_AUTO_TEST_CASE(isPoint) {
     auto a = tuple(4.3, -4.2, 3.1, 1);
 
-    BOOST_CHECK_EQUAL(a.getX(), 4.3);
-    BOOST_CHECK_EQUAL(a.getY(), -4.2);
-    BOOST_CHECK_EQUAL(a.getZ(), 3.1);
+    BOOST_CHECK_EQUAL(a.getX(), 4.3f);
+    BOOST_CHECK_EQUAL(a.getY(), -4.2f);
+    BOOST_CHECK_EQUAL(a.getZ(), 3.1f);
     BOOST_CHECK_EQUAL(a.getW(), 1);
     BOOST_CHECK_EQUAL(a.isPoint(), true);
     BOOST_CHECK_EQUAL(a.isVector(), false);
@@ -23,9 +24,9 @@ BOOST_AUTO_TEST_CASE(isPoint) {
 BOOST_AUTO_TEST_CASE(isVector) {
     auto a = tuple(4.3, -4.2, 3.1, 0);
 
-    BOOST_CHECK_EQUAL(a.getX(), 4.3);
-    BOOST_CHECK_EQUAL(a.getY(), -4.2);
-    BOOST_CHECK_EQUAL(a.getZ(), 3.1);
+    BOOST_CHECK_EQUAL(a.getX(), 4.3f);
+    BOOST_CHECK_EQUAL(a.getY(), -4.2f);
+    BOOST_CHECK_EQUAL(a.getZ(), 3.1f);
     BOOST_CHECK_EQUAL(a.getW(), 0);
     BOOST_CHECK_EQUAL(a.isPoint(), false);
     BOOST_CHECK_EQUAL(a.isVector(), true);
@@ -138,13 +139,13 @@ BOOST_AUTO_TEST_CASE(zMagnitute) {
 BOOST_AUTO_TEST_CASE(positiveMagnitude) {
     auto v = vector(1, 2, 3);
 
-    BOOST_CHECK_EQUAL(v.getMagnitude(), sqrt(14));
+    BOOST_CHECK(equalWithError(v.getMagnitude(), sqrt(14)));
 }
 
 BOOST_AUTO_TEST_CASE(negativeMagnitude) {
     auto v = vector(-1, -2, -3);
 
-    BOOST_CHECK_EQUAL(v.getMagnitude(), sqrt(14));
+    BOOST_CHECK(equalWithError(v.getMagnitude(), sqrt(14)));
 }
 
 BOOST_AUTO_TEST_CASE(normalizeXOnlyVector) {
@@ -162,7 +163,7 @@ BOOST_AUTO_TEST_CASE(normalizeXYZVector) {
 BOOST_AUTO_TEST_CASE(normalizedVectorMagnitude) {
     auto v = vector(1, 2, 3);
 
-    BOOST_CHECK_EQUAL(v.normalized().getMagnitude(), 1);
+    BOOST_CHECK(equalWithError(v.normalized().getMagnitude(), 1));
 }
 
 /*-----VECTOR PRODUCT TESTS-----*/
