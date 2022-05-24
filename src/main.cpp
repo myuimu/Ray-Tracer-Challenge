@@ -13,9 +13,9 @@ int main() {
     auto mirror = std::make_shared<plane>(plane(
         xRotation(M_PI_2f).rotateY(M_PI_4).translate(0, 0, 5),
         material(color(1, 1, 1), 0, 0.1, 0.2, 10, 1)));
-    auto middle = std::make_shared<sphere>(sphere(
-        translation(-0.5, 1, 0.5),
-        material(color(1, 0.8, 0.8), 0.01, 0.1, 1, 300, 0.9, 0.9, 1.5)));
+    auto middle = std::make_shared<cube>(cube(
+        translation(-0.5, 1, 0.5).rotateY(M_PI_4f),
+        material(color(1, 0, 0), 0.1, 0.1, 1, 300, 1, 0.1, 1.5)));
     auto right = std::make_shared<sphere>(sphere(
         scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5),
         material(color(0.5, 1, 0.1), 0.1, 0.7, 0.3, 200, 0)));

@@ -22,6 +22,7 @@
 #include "shape/pattern/gradient.h"
 #include "shape/pattern/ring.h"
 #include "shape/pattern/checker.h"
+#include "shape/cube/cube.h"
 
 namespace rayTracer {
     bool equalWithError(const float &lhs, const float &rhs);
